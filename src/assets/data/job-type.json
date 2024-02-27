@@ -1,0 +1,46 @@
+[
+  {
+    "label": "Full-Time",
+    "value": "full-time"
+  },
+  {
+    "label": "Part-Time",
+    "value": "part-time"
+  },
+  {
+    "label": "Contract",
+    "value": "contract"
+  },
+  {
+    "label": "Temporary",
+    "value": "temporary"
+  },
+  {
+    "label": "Freelance",
+    "value": "freelance"
+  },
+  {
+    "label": "Internship",
+    "value": "internship"
+  },
+  {
+    "label": "Remote",
+    "value": "remote"
+  },
+  {
+    "label": "Permanent",
+    "value": "permanent"
+  },
+  {
+    "label": "Seasonal",
+    "value": "seasonal"
+  },
+  {
+    "label": "Consultant",
+    "value": "consultant"
+  },
+  {
+    "label": "Volunteer",
+    "value": "volunteer"
+  }
+]

@@ -1,0 +1,16 @@
+<div class="p-6">
+  <div class="wrap">
+    <app-search-form (search)="onSearch($event)" (clear)="onClearInput($event)" />
+    @if (pagination) {
+    <app-table [columns]="columns" [data]="categories | paginate : {
+                  itemsPerPage: pagination.perPage,
+                  currentPage: pagination.currentPage,
+                  totalItems: pagination.total
+                }" (itemClicked)="onDropdownItemClick($event)" />
+    <app-pagination [pagination]="pagination" (pageChange)="onPageChanged($event)"></app-pagination>
+    }
+  </div>
+</div>
+
+<app-confirm-dialog *ngIf="showConfirmDialog" [message]="'Do you want to proceed?'"
+  (confirmed)="onConfirmation($event)" />

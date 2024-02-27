@@ -1,0 +1,29 @@
+@if (pagination) {
+<div class="pagination-content">
+  <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+    <div>
+      <p class="text-sm text-gray-700 dark:text-gray-400">
+        Showing page
+        <span class="font-semibold text-primary-600">{{pagination.currentPage}}</span>
+        from
+        <span class="font-semibold text-primary-600">{{pagination.lastPage}}</span> page
+        of
+        <span class="font-semibold text-primary-600">{{pagination.total}}</span>
+        results
+      </p>
+    </div>
+    <div>
+      <pagination-controls
+        class="paginator"
+        previousLabel=""
+        nextLabel=""
+        [responsive]="true"
+        (pageBoundsCorrection)="pageChanged($event)"
+        (pageChange)="pageChanged($event)">
+      </pagination-controls>
+    </div>
+  </div>
+</div>
+
+}
+

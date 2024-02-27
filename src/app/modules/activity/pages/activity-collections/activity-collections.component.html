@@ -1,0 +1,15 @@
+@if (activities.length >= 0) {
+  <app-empty-record-message [routes]="newFormsRoute" />
+} @else {
+<div class="p-6">
+  <div
+    class="wrap">
+    <app-search-form (search)="onSearch($event)" (clear)="onClearInput($event)" />
+    <app-table [columns]="columns" [data]="activities" (itemClicked)="onDropdownItemClick($event)" />
+    <app-pagination [pagination]="pagination" (pageChange)="onPageChanged($event)"></app-pagination>
+  </div>
+</div>
+
+<app-confirm-dialog *ngIf="showConfirmDialog" [message]="'Do you want to proceed?'"
+  (confirmed)="onConfirmation($event)" />
+}

@@ -1,0 +1,17 @@
+<div class="wrapper">
+    <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+        <!-- Modal content -->
+        <div class="content">
+          <img src="../../../../assets/icons/trash.svg" alt="Trash"  />
+            <p>Are you sure you want to delete this item?</p>
+            <div>
+                <button (click)="onConfirm()" type="button" class="confirm">
+                    Yes, I'm sure
+                </button>
+                <button (click)="onCancel()" type="button" class="cancel">
+                    No, cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

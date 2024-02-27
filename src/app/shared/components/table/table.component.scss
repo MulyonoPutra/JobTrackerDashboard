@@ -1,0 +1,11 @@
+:host {
+	display: block;
+}
+
+.dropdown-menu {
+	@apply absolute -top-[200px] right-0 w-60 transform rounded-md bg-white py-4 shadow-custom ring-1 ring-transparent ring-opacity-5 transition focus:outline-none dark:bg-night-600;
+
+	.action-list {
+		@apply block cursor-pointer rounded-md px-3 py-2 text-sm font-semibold capitalize text-gray-700 hover:bg-gray-100 hover:text-primary-500 dark:text-night-200 dark:hover:bg-night-500 dark:hover:text-primary-500;
+	}
+}
