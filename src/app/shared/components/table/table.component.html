@@ -18,6 +18,8 @@
             <td class="px-6 py-4 text-xs font-semibold">{{ row[col]?.name | appTextOverflow: 10 }}</td>
             } @else if (row[col] === row.status) {
             <app-status-badges [status]="row[col]"></app-status-badges>
+            } @else if (row[col] === row.appliedOn || row[col] === row.jobPosted) {
+              <td class="px-6 py-4 text-xs font-semibold">{{ row[col] | customDate }}</td>
             } @else {
             <td class="px-6 py-4 text-xs font-semibold">{{ row[col] | appTextOverflow: 20 }}</td>
             }
