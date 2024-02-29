@@ -9,12 +9,14 @@ const routes: Routes = [
 		path: 'dashboard',
 		component: LayoutComponent,
 		loadChildren: () => import('../dashboard/dashboard.module').then((m) => m.DashboardModule),
+    canActivate: [AuthenticationGuard],
 	},
 	{
 		path: 'categories',
 		component: LayoutComponent,
 		loadChildren: () =>
 			import('../categories/categories.module').then((m) => m.CategoriesModule),
+    canActivate: [AuthenticationGuard],
 	},
   {
     path: 'activities',

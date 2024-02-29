@@ -1,10 +1,18 @@
 @if (activities && activities.length === 0) {
-  <app-empty-record-message [routes]="newFormsRoute" />
+<app-empty-record-message [routes]="newFormsRoute" />
 } @else {
 <div class="p-6">
-  <div
-    class="wrap">
-    <app-search-form (search)="onSearch($event)" (clear)="onClearInput($event)" />
+  <div class="wrap">
+    <div class="flex space-x-4 ...">
+      <div class="w-full">
+        <app-search-form (search)="onSearch($event)" (clear)="onClearInput($event)" />
+      </div>
+      <div class="mx-auto mt-2">
+        <app-button [label]="'Create'" (clicked)="createNew()" />
+      </div>
+
+    </div>
+
     <app-table [columns]="columns" [data]="activities" (itemClicked)="onDropdownItemClick($event)" />
     <app-pagination [pagination]="pagination" (pageChange)="onPageChanged($event)"></app-pagination>
   </div>

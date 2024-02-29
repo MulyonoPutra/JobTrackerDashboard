@@ -3,6 +3,7 @@ import { take, timer } from 'rxjs';
 
 import { Activities } from 'src/app/core/models/activity';
 import { ActivityService } from 'src/app/core/services/activity.service';
+import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 import { CommonModule } from '@angular/common';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { DropdownMenu } from 'src/app/core/models/dropdown-menu';
@@ -26,14 +27,15 @@ import { ToastService } from 'src/app/core/services/toast.service';
     SearchFormComponent,
     ConfirmDialogComponent,
     PaginationComponent,
-    EmptyRecordMessageComponent
+    EmptyRecordMessageComponent,
+    ButtonComponent
   ],
   templateUrl: './activity-collections.component.html',
   styleUrls: ['./activity-collections.component.scss'],
   providers: [ActivityService]
 })
 export class ActivityCollectionsComponent implements OnInit {
-  columns = ['id', 'position', 'location', 'status', 'jobPosted', 'category', 'appliedOn', 'user'];
+  columns = ['position', 'location', 'status', 'jobPosted', 'category', 'appliedOn'];
   activityId!: string;
   activities!: Activities;
   showConfirmDialog = false;
@@ -96,6 +98,10 @@ export class ActivityCollectionsComponent implements OnInit {
     if (confirmed) {
       this.onRemove(this.activityId);
     }
+  }
+
+  createNew(): void {
+    this.router.navigate(['/activities/forms']);
   }
 
   onRemove(item: string) {

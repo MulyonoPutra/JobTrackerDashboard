@@ -6,14 +6,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpErrorResponse } from '@angular/common/http';
 import { NgClass, NgIf } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { take, timer } from 'rxjs';
 
 import { AngularSvgIconModule } from 'angular-svg-icon';
-import { AuthInterceptor } from 'src/app/core/interceptor/auth.interceptor';
 import { AuthService } from 'src/app/core/services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 import { Login } from 'src/app/core/models/login';
 import { ToastService } from 'src/app/core/services/toast.service';
@@ -25,11 +24,7 @@ import { ValidationService } from 'src/app/core/services/validation.service';
   styleUrls: ['./sign-in.component.scss'],
   standalone: true,
   imports: [FormsModule, ReactiveFormsModule, RouterLink, AngularSvgIconModule, NgClass, NgIf],
-  providers: [ValidationService, AuthService, {
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true,
-  },]
+  providers: [ValidationService, AuthService]
 })
 export class SignInComponent implements OnInit {
   form!: FormGroup;
@@ -70,8 +65,7 @@ export class SignInComponent implements OnInit {
     this.submitted = true;
     if (this.form.valid) {
       this._authService.login(this.formCtrlValue).subscribe({
-        next: () => {
-        },
+        next: () => { },
         error: (error: HttpErrorResponse) => {
           this.errorMessage(error);
         },

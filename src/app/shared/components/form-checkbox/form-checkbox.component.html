@@ -1,0 +1,17 @@
+  <div class="flex items-center justify-between space-x-3" [formGroup]="formGroup">
+    <div class="flex items-center">
+      <input
+        [id]="fieldName"
+        [name]="fieldName"
+        type="checkbox"
+        [ngClass]="{ 'errors-field': isInvalid }"
+        [placeholder]="placeholder"
+        [formControlName]="fieldName"/>
+      <label for="accept-term" class="ml-2 block text-sm text-gray-400 dark:text-night-200">
+        I Accept the
+        <a class="font-medium text-primary-500 hover:text-primary-400"> Terms </a>
+      </label>
+    </div>
+    <br>
+    <div *ngIf="isInvalid" class="errors-message">{{ errorMessage }}</div>
+  </div>
