@@ -13,18 +13,18 @@
       </div>
       <div class="py-4">
         <app-form-select [formGroup]="form" fieldName="jobType" id="jobType" label="Select Job Type"
-          placeholder="Choose Job Type" [options]="jobTypes" />
+          placeholder="Choose Job Type" [options]="jobTypes" [valueField]="'name'" />
       </div>
       <div class="py-4">
         <app-form-select [formGroup]="form" fieldName="status" id="status" label="Select Status"
-          placeholder="Choose Status" [options]="status" />
+          placeholder="Choose Status" [options]="status" [valueField]="'name'" />
       </div>
 
       <app-datepicker [label]="'Applied On'" (dateSelected)="onAppliedOnSelected($event)"></app-datepicker>
 
       <div>
         <app-form-select [formGroup]="form" fieldName="categoryId" id="categoryId" label="Category"
-          placeholder="Select Category" [options]="categories" />
+          placeholder="Select Category" [options]="categories" [valueField]="'id'" />
       </div>
       <div class="pt-4">
         <app-datepicker [label]="'Job Posted'" (dateSelected)="onJobPostedSelected($event)"></app-datepicker>

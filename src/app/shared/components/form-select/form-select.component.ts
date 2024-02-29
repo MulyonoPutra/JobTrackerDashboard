@@ -21,11 +21,17 @@ export class FormSelectComponent {
   @Input() fieldName!: string;
   @Input() options!: any[];
   @Input() formGroup!: FormGroup;
+  @Input() valueField: string = 'id';
+  @Input() textField: string = 'name';
 
   selectedValue: any;
 
   constructor(private validation: ValidationService) { }
 
+  getValue(option: any): any {
+    return option[this.valueField];
+  }
+  
   get isInvalid() {
     const control = this.formGroup.get(this.fieldName) as FormControl;
     return this.validation.isInvalid(control);

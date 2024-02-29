@@ -14,7 +14,6 @@ import { FormFieldComponent } from 'src/app/shared/components/form-field/form-fi
 import { FormSelectComponent } from 'src/app/shared/components/form-select/form-select.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from 'src/app/core/services/toast.service';
-import { UpdateActivityDTO } from 'src/app/core/models/dto/update-activity.dto';
 import { ValidationService } from 'src/app/core/services/validation.service';
 
 @Component({
@@ -111,7 +110,7 @@ export class ActivityFormsComponent implements OnInit, AfterViewInit {
       status: activity.status,
       appliedOn: activity.appliedOn,
       jobPosted: activity.jobPosted,
-      categoryId: activity.category?.id,
+      categoryId: activity.category.id,
     });
   }
 
@@ -198,7 +197,7 @@ export class ActivityFormsComponent implements OnInit, AfterViewInit {
   navigateAfterSucceed(): void {
     timer(1000)
       .pipe(take(1))
-      .subscribe(() => this.router.navigateByUrl('/categories/collections'));
+      .subscribe(() => this.router.navigateByUrl('/activities/collections'));
   }
 
   goBack(): void {

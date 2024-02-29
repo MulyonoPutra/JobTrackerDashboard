@@ -1,4 +1,4 @@
-@if (activities.length >= 0) {
+@if (activities && activities.length === 0) {
   <app-empty-record-message [routes]="newFormsRoute" />
 } @else {
 <div class="p-6">

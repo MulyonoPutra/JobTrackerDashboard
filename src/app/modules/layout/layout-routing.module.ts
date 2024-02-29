@@ -1,5 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthenticationGuard } from 'src/app/core/guards/auth.guard';
 import { LayoutComponent } from './layout.component';
 import { NgModule } from '@angular/core';
 
@@ -20,6 +21,7 @@ const routes: Routes = [
     component: LayoutComponent,
     loadChildren: () =>
       import('../activity/activity.module').then((m) => m.ActivityModule),
+    canActivate: [AuthenticationGuard],
   },
 	{ path: '', redirectTo: 'dashboard', pathMatch: 'full' },
 	{ path: '**', redirectTo: 'error/404' },

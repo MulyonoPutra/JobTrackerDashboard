@@ -2,9 +2,9 @@
   <label [for]="id" [ngClass]="{ 'errors-label': isInvalid }"> {{ label }} </label>
   <select [id]="id" [formControlName]="fieldName" [ngClass]="{ 'errors-field': isInvalid }">
     <option *ngIf="placeholder" [value]="''" disabled selected>{{ placeholder }}</option>
-    <option *ngFor="let option of options" [value]="option.value || option.id" class="font-sm text-xs">
+    <option *ngFor="let option of options" [value]="getValue(option)" class="font-sm text-xs">
      <span>
-      {{ option.label || option.name }}
+      {{ option.name }}
      </span>
     </option>
   </select>

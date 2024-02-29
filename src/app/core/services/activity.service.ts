@@ -34,7 +34,7 @@ export class ActivityService {
   }
 
   findAppliedStatus(): Observable<any> {
-    return this.http.get<any>(`assets/data/applied-status.json`)
+    return this.http.get<any>(`assets/data/status.json`)
   }
 
   create(body: CreateActivityDTO): Observable<CreateActivityDTO> {
