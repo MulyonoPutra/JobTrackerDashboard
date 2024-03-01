@@ -82,7 +82,7 @@ export class SignInComponent implements OnInit {
   navigateAfterSucceed(): void {
     timer(1000)
       .pipe(take(1))
-      .subscribe(() => this._router.navigateByUrl('/'));
+      .subscribe(() => this._router.navigateByUrl('/activities/collections'));
   }
 
   private errorMessage(error: HttpErrorResponse) {

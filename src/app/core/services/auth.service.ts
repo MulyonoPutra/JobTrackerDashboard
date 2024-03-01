@@ -21,8 +21,9 @@ export class AuthService {
   login(body: Login): Observable<any> {
     return this.http.post<any>(`${this.env}/auth/login`, body).pipe(
       map((response) => {
-        this._storageService.setAccessToken(response.data.accessToken) as unknown as string;
-        return response.data;
+        console.log(response);
+        this._storageService.setAccessToken(response.data.accessToken);
+        return response;
       }),
       catchError((error: HttpErrorResponse) => handlerHttpError(error))
     )
