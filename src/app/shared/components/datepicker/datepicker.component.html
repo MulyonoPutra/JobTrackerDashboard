@@ -76,7 +76,7 @@
           <ng-container *ngFor="let blankday of blankdays">
             <div style="width: 14.28%" class="text-center border-none p-1 border-transparent text-sm"></div>
           </ng-container>
-          <ng-container *ngFor="let date of no_of_days; let dateIndex = index; trackBy: trackByIdentity">
+          <ng-container *ngFor="let date of numberOfDays; let dateIndex = index; trackBy: trackByIdentity">
             <div style="width: 14.28%" class="px-1 mb-1">
               <div (click)="getDateValue(date)" class="
                         cursor-pointer

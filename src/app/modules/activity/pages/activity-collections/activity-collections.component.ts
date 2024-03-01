@@ -37,7 +37,7 @@ import { ToastService } from 'src/app/core/services/toast.service';
   providers: [ActivityService]
 })
 export class ActivityCollectionsComponent implements OnInit {
-  columns = ['position', 'location', 'status', 'jobPosted', 'category', 'appliedOn'];
+  columns = ['companyName', 'position', 'location', 'status', 'jobPosted', 'category', 'appliedOn'];
   activityId!: string;
   activities!: Activities;
   showConfirmDialog = false;

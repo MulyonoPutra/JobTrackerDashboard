@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, forwardRef } from '@angular/core';
+import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-datepicker',
@@ -11,6 +11,13 @@ import { FormsModule } from '@angular/forms';
   ],
   templateUrl: './datepicker.component.html',
   styleUrls: ['./datepicker.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => DatepickerComponent),
+      multi: true
+    }
+  ]
 })
 export class DatepickerComponent implements OnInit {
 
@@ -37,8 +44,9 @@ export class DatepickerComponent implements OnInit {
   datepickerValue!: string;
   month!: number;
   year!: number;
-  no_of_days = [] as number[];
+  numberOfDays = [] as number[];
   blankdays = [] as number[];
+  value: string | undefined;
 
   constructor() { }
 
@@ -62,15 +70,16 @@ export class DatepickerComponent implements OnInit {
 
   getDateValue(date: any) {
     let selectedDate = new Date(this.year, this.month, date);
+    selectedDate.setHours(12, 0, 0, 0);
     this.datepickerValue = selectedDate.toDateString();
+    this.value = selectedDate.toISOString().split('T')[0]; // Set value for form control
+    this.onChange(this.value); // Notify form control value change
     this.showDatepicker = false;
-    this.dateSelected.emit(this.datepickerValue);
   }
 
   getNoOfDays() {
     const daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
 
-    // find where to start calendar day of week
     let dayOfWeek = new Date(this.year, this.month).getDay();
     let blankdaysArray = [];
     for (var i = 1; i <= dayOfWeek; i++) {
@@ -83,8 +92,35 @@ export class DatepickerComponent implements OnInit {
     }
 
     this.blankdays = blankdaysArray;
-    this.no_of_days = daysArray;
+    this.numberOfDays = daysArray;
   }
 
   trackByIdentity = (index: number, item: any) => item;
+
+  // Value and change handlers for ControlValueAccessor
+  private onChange: any = () => { };
+  private onTouched: any = () => { };
+
+  // Implement ControlValueAccessor methods
+  writeValue(value: any): void {
+    if (value) {
+      const date = new Date(value);
+      this.month = date.getMonth();
+      this.year = date.getFullYear();
+      this.datepickerValue = date.toDateString();
+      this.getNoOfDays();
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    // You can implement this if you want to handle disabling the control
+  }
 }
