@@ -1,0 +1,16 @@
+ <div class="p-6">
+  <div
+    class="font-semibold relative text-green-500 rounded-lg bg-white dark:bg-night-700">
+    <div
+      class="border-b-2 border-gray-100 px-6 py-3 dark:border-night-600 dark:text-night-50">
+      <span class="text-center"> {{ title }} </span>
+    </div>
+    <div class="p-6">
+      <ng-content select="[data]"></ng-content>
+    </div>
+    <div
+      class="border-t-2 border-gray-100 px-6 py-3 dark:border-night-600 dark:text-night-50">
+      <ng-content select="[pagination]"></ng-content>
+    </div>
+  </div>
+</div>

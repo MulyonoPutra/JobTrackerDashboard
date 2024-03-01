@@ -1,23 +1,32 @@
-@if (activities && activities.length === 0) {
+<!-- @if (activities && activities.length === 0) {
 <app-empty-record-message [routes]="newFormsRoute" />
-} @else {
-<div class="p-6">
-  <div class="wrap">
-    <div class="flex space-x-4 ...">
+} -->
+
+<app-card-collections [title]="'Activities'">
+  <ng-container data>
+    <div class="flex space-x-4">
       <div class="w-full">
         <app-search-form (search)="onSearch($event)" (clear)="onClearInput($event)" />
       </div>
       <div class="mx-auto mt-2">
         <app-button [label]="'Create'" (clicked)="createNew()" />
       </div>
-
     </div>
 
-    <app-table [columns]="columns" [data]="activities" (itemClicked)="onDropdownItemClick($event)" />
-    <app-pagination [pagination]="pagination" (pageChange)="onPageChanged($event)"></app-pagination>
-  </div>
-</div>
+    <app-table
+        [columns]="columns"
+        [data]="activities"
+        (itemClicked)="onDropdownItemClick($event)" />
 
-<app-confirm-dialog *ngIf="showConfirmDialog" [message]="'Do you want to proceed?'"
-  (confirmed)="onConfirmation($event)" />
-}
+    <app-confirm-dialog
+        *ngIf="showConfirmDialog"
+        [message]="'Do you want to proceed?'"
+        (confirmed)="onConfirmation($event)" />
+  </ng-container>
+  <ng-container pagination>
+      <!-- <app-pagination [pagination]="pagination" (pageChange)="onPageChanged($event)"></app-pagination> -->
+  </ng-container>
+
+</app-card-collections>
+
+

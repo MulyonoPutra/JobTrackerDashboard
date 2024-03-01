@@ -35,4 +35,8 @@ export class AuthService {
     )
   }
 
+  logout(){
+    this._storageService.clear();
+  }
+
 }

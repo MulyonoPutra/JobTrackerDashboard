@@ -1,16 +1,27 @@
-<div class="p-6">
-  <div class="wrap">
-    <app-search-form (search)="onSearch($event)" (clear)="onClearInput($event)" />
-    @if (pagination) {
-    <app-table [columns]="columns" [data]="categories | paginate : {
+  <app-card-collections [title]="'Categories'">
+    <ng-container data>
+      <div class="flex space-x-4">
+        <div class="w-full">
+          <app-search-form (search)="onSearch($event)" (clear)="onClearInput($event)" />
+        </div>
+        <div class="mx-auto mt-2">
+          <app-button [label]="'Create'" (clicked)="createNew()" />
+        </div>
+      </div>
+      @if (pagination) {
+      <app-table [columns]="columns" [data]="categories | paginate : {
                   itemsPerPage: pagination.perPage,
                   currentPage: pagination.currentPage,
                   totalItems: pagination.total
                 }" (itemClicked)="onDropdownItemClick($event)" />
-    <app-pagination [pagination]="pagination" (pageChange)="onPageChanged($event)"></app-pagination>
-    }
-  </div>
-</div>
+      }
+       <app-confirm-dialog *ngIf="showConfirmDialog" [message]="'Do you want to proceed?'"
+    (confirmed)="onConfirmation($event)" />
+    </ng-container>
 
-<app-confirm-dialog *ngIf="showConfirmDialog" [message]="'Do you want to proceed?'"
-  (confirmed)="onConfirmation($event)" />
+    <ng-container pagination>
+      <app-pagination [pagination]="pagination" (pageChange)="onPageChanged($event)"></app-pagination>
+    </ng-container>
+  </app-card-collections>
+
+
