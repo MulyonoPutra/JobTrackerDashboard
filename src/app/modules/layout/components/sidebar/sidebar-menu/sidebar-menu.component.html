@@ -7,7 +7,6 @@
     </small>
   </div>
   <ul class="flex flex-col space-y-1">
-    <!-- List items -->
     <li *ngFor="let item of menu.items">
       <!-- Menu List -->
       <div (click)="toggleMenu(item)" class="group relative text-gray-400 dark:text-night-400">
@@ -59,7 +58,7 @@
         <!-- Tooltip -->
         <div class="fixed w-full" *ngIf="!menuService.showSideBar">
           <span
-            class="z-1 absolute left-14 -top-[34px] w-auto min-w-max origin-left scale-0 rounded-md bg-black p-2 text-xs font-bold text-white shadow-md transition-all duration-200 group-hover:scale-100 dark:bg-white dark:text-night-900">
+            class="-z-50 absolute left-14 -top-[34px] w-auto min-w-max origin-left scale-0 rounded-md bg-black p-2 text-xs font-bold text-white shadow-md transition-all duration-200 group-hover:scale-100 dark:bg-white dark:text-night-900">
             {{ item.label }}
           </span>
         </div>

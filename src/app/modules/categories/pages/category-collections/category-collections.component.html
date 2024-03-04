@@ -1,5 +1,5 @@
   <app-card-collections [title]="'Categories'">
-    <ng-container data>
+    <ng-container data class="z-0">
       <div class="flex space-x-4">
         <div class="w-full">
           <app-search-form (search)="onSearch($event)" (clear)="onClearInput($event)" />
@@ -15,13 +15,11 @@
                   totalItems: pagination.total
                 }" (itemClicked)="onDropdownItemClick($event)" />
       }
-       <app-confirm-dialog *ngIf="showConfirmDialog" [message]="'Do you want to proceed?'"
-    (confirmed)="onConfirmation($event)" />
+      <app-confirm-dialog *ngIf="showConfirmDialog" [message]="'Do you want to proceed?'"
+        (confirmed)="onConfirmation($event)" />
     </ng-container>
 
     <ng-container pagination>
       <app-pagination [pagination]="pagination" (pageChange)="onPageChanged($event)"></app-pagination>
     </ng-container>
   </app-card-collections>
-
-

@@ -1,8 +1,8 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { take, timer } from 'rxjs';
+import { Subject, take, takeUntil, timer } from 'rxjs';
 
 import { Activity } from 'src/app/core/models/activity';
 import { ActivityService } from 'src/app/core/services/activity.service';
@@ -32,7 +32,9 @@ import { ValidationService } from 'src/app/core/services/validation.service';
   styleUrls: ['./activity-forms.component.scss'],
   providers: [ActivityService, CategoryService],
 })
-export class ActivityFormsComponent implements OnInit, AfterViewInit {
+export class ActivityFormsComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  private destroyed = new Subject();
 
   form!: FormGroup;
   routeId!: string;
@@ -115,7 +117,7 @@ export class ActivityFormsComponent implements OnInit, AfterViewInit {
   }
 
   findOne(): void {
-    this._activityService.findOne(this.routeId).subscribe({
+    this._activityService.findOne(this.routeId).pipe(takeUntil(this.destroyed)).subscribe({
       next: (activity: Activity) => {
         this.prepopulateForm(activity);
       },
@@ -147,7 +149,7 @@ export class ActivityFormsComponent implements OnInit, AfterViewInit {
   }
 
   findAppliedStatus(): void {
-    this._activityService.findAppliedStatus().subscribe({
+    this._activityService.findAppliedStatus().pipe(takeUntil(this.destroyed)).subscribe({
       next: (response) => {
         this.status = response;
       }
@@ -155,7 +157,7 @@ export class ActivityFormsComponent implements OnInit, AfterViewInit {
   }
 
   findCategoriesFromServer(): void {
-    this._categoryService.findAll().subscribe({
+    this._categoryService.findAll().pipe(takeUntil(this.destroyed)).subscribe({
       next: (response) => {
         this.categories = response;
       },
@@ -163,7 +165,7 @@ export class ActivityFormsComponent implements OnInit, AfterViewInit {
   }
 
   onCreate(): void {
-    this._activityService.create(this.formCtrlValue).subscribe({
+    this._activityService.create(this.formCtrlValue).pipe(takeUntil(this.destroyed)).subscribe({
       next: () => {
         this._toastService.showSuccess('Success!', 'Successfully created!');
       },
@@ -175,7 +177,7 @@ export class ActivityFormsComponent implements OnInit, AfterViewInit {
   }
 
   onUpdate(): void {
-    this._activityService.update(this.routeId, this.formCtrlValue).subscribe({
+    this._activityService.update(this.routeId, this.formCtrlValue).pipe(takeUntil(this.destroyed)).subscribe({
       next: () => {
         this._toastService.showSuccess('Success!', 'Successfully updated!');
       },
@@ -202,6 +204,11 @@ export class ActivityFormsComponent implements OnInit, AfterViewInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  ngOnDestroy() {
+    this.destroyed.next(true);
+    this.destroyed.complete();
   }
 
 }

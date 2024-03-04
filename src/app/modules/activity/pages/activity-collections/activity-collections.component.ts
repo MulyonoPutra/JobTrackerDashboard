@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { take, timer } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject, take, takeUntil, timer } from 'rxjs';
 
 import { Activities } from 'src/app/core/models/activity';
 import { ActivityService } from 'src/app/core/services/activity.service';
@@ -36,7 +36,7 @@ import { ToastService } from 'src/app/core/services/toast.service';
   styleUrls: ['./activity-collections.component.scss'],
   providers: [ActivityService]
 })
-export class ActivityCollectionsComponent implements OnInit {
+export class ActivityCollectionsComponent implements OnInit, OnDestroy {
   columns = ['companyName', 'position', 'location', 'status', 'jobPosted', 'category', 'appliedOn'];
   activityId!: string;
   activities!: Activities;
@@ -44,6 +44,8 @@ export class ActivityCollectionsComponent implements OnInit {
   pagination!: Pagination;
   page = 1;
   perPage = 5;
+
+  private destroyed = new Subject();
 
   newFormsRoute = 'activities/forms';
 
@@ -58,7 +60,7 @@ export class ActivityCollectionsComponent implements OnInit {
   }
 
   findAll(): void {
-    this._activityService.findAll().subscribe({
+    this._activityService.findAll().pipe(takeUntil(this.destroyed)).subscribe({
       next: (response: Activities) => {
         this.activities = response;
       },
@@ -107,7 +109,7 @@ export class ActivityCollectionsComponent implements OnInit {
   }
 
   onRemove(item: string) {
-    this._activityService.remove(item).subscribe({
+    this._activityService.remove(item).pipe(takeUntil(this.destroyed)).subscribe({
       next: () => { },
       error: (error: HttpErrorResponse) => {
         this.errorMessage(error);
@@ -131,6 +133,11 @@ export class ActivityCollectionsComponent implements OnInit {
 
   private errorMessage(error: HttpErrorResponse) {
     this._toastService.showError('Error!', error.message);
+  }
+
+  ngOnDestroy() {
+    this.destroyed.next(true);
+    this.destroyed.complete();
   }
 
 }
