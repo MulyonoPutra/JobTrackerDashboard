@@ -5,19 +5,21 @@ import { AppComponent } from './app/app.component';
 import { AppRoutingModule } from './app/app-routing.module';
 import { AuthInterceptorProvider } from './app/core/providers/auth-interceptor.provider';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpRequestInterceptorProvider } from './app/core/providers/http-request-interceptor.provider';
 import { environment } from './environments/environment';
 
 if (environment.production) {
   enableProdMode();
-  //show this warning only on prod mode
   if (window) {
     selfXSSWarning();
   }
 }
 
 bootstrapApplication(AppComponent, {
-  providers: [importProvidersFrom(BrowserModule, AppRoutingModule),
+  providers: [
+    importProvidersFrom(BrowserModule, AppRoutingModule),
     AuthInterceptorProvider,
+    HttpRequestInterceptorProvider,
     HttpClientModule
   ],
 }).catch((err) => console.error(err));

@@ -1,12 +1,15 @@
+import { Component, OnInit } from '@angular/core';
+import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { take, timer } from 'rxjs';
 
 import { AlertComponent } from './shared/components/alert/alert.component';
-import { AuthInterceptor } from './core/interceptor/auth.interceptor';
-import { Component } from '@angular/core';
+import { AuthInterceptorProvider } from './core/providers/auth-interceptor.provider';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpRequestInterceptorProvider } from './core/providers/http-request-interceptor.provider';
+import { LoadingIndicatorComponent } from './shared/components/loading-indicator/loading-indicator.component';
 import { NgClass } from '@angular/common';
 import { ResponsiveHelperComponent } from './shared/components/responsive-helper/responsive-helper.component';
-import { RouterOutlet } from '@angular/router';
 import { ThemeService } from './core/services/theme.service';
 
 @Component({
@@ -21,20 +24,48 @@ import { ThemeService } from './core/services/theme.service';
     ResponsiveHelperComponent,
     FormsModule,
     ReactiveFormsModule,
-    AlertComponent
+    AlertComponent,
+    LoadingIndicatorComponent
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
+    AuthInterceptorProvider, HttpRequestInterceptorProvider
   ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'Angular Tailwind';
+  loadingIndicator!: boolean;
+  constructor(public themeService: ThemeService, private router: Router) {
+    this.showSpinner();
+  }
 
-  constructor(public themeService: ThemeService) {
+  ngOnInit() {
+  }
 
+  showSpinner(): void {
+    this.router.events.subscribe((routeEvent: Event) => {
+      if (routeEvent instanceof NavigationStart) {
+        this.loadingIndicator = true;
+      }
+
+      if (routeEvent instanceof NavigationEnd) {
+        this.delay();
+      }
+
+      if (
+        routeEvent instanceof NavigationEnd ||
+        routeEvent instanceof NavigationError ||
+        routeEvent instanceof NavigationCancel
+      ) {
+        this.delay();
+      }
+    });
+  }
+
+  delay(): void {
+    timer(1000)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.loadingIndicator = false;
+      });
   }
 }
