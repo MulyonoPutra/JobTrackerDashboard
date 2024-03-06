@@ -7,5 +7,7 @@
           [placeholder]="placeholder" [formControlName]="fieldName" />
         <label [ngClass]="{ 'errors-label': isInvalid }"> {{ label }} </label>
       </div>
-      <div *ngIf="isInvalid" class="errors-message">{{ errorMessage }}</div>
+      @if (isInvalid) {
+        <div class="errors-message">{{ errorMessage }}</div>
+      }
     </div>

@@ -1,12 +1,20 @@
 <div class="form-group relative" [formGroup]="formGroup">
   <label [for]="id" [ngClass]="{ 'errors-label': isInvalid }"> {{ label }} </label>
   <select [id]="id" [formControlName]="fieldName" [ngClass]="{ 'errors-field': isInvalid }">
-    <option *ngIf="placeholder" [value]="''" disabled selected>{{ placeholder }}</option>
-    <option *ngFor="let option of options" [value]="getValue(option)" class="font-sm text-xs">
-     <span>
-      {{ option.name }}
-     </span>
+    @if (placeholder) {
+      <option [value]="''" disabled selected>{{ placeholder }}</option>
+    }
+
+    @for (option of options; track $index) {
+    <option [value]="getValue(option)" class="font-sm text-xs">
+      <span>
+        {{ option.name }}
+      </span>
     </option>
+    }
   </select>
-  <div *ngIf="isInvalid" class="errors-message">{{ errorMessage }}</div>
+  
+  @if (isInvalid) {
+    <div class="errors-message">{{ errorMessage }}</div>
+  }
 </div>

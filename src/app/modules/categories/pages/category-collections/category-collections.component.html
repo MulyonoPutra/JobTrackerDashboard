@@ -1,5 +1,5 @@
   <app-card-collections [title]="'Categories'">
-    <ng-container data class="z-0">
+    <ng-container content class="z-0">
       <div class="flex space-x-4">
         <div class="w-full">
           <app-search-form (search)="onSearch($event)" (clear)="onClearInput($event)" />
@@ -19,7 +19,7 @@
         (confirmed)="onConfirmation($event)" />
     </ng-container>
 
-    <ng-container pagination>
+    <ng-container footer>
       <app-pagination [pagination]="pagination" (pageChange)="onPageChanged($event)"></app-pagination>
     </ng-container>
   </app-card-collections>

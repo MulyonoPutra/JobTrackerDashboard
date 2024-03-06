@@ -3,28 +3,25 @@
 } -->
 
 <app-card-collections [title]="'Activities'">
-  <ng-container data>
-    <div class="flex space-x-4">
-      <div class="w-full">
-        <app-search-form (search)="onSearch($event)" (clear)="onClearInput($event)" />
-      </div>
-      <div class="mx-auto mt-2">
-        <app-button [label]="'Create'" (clicked)="createNew()" />
-      </div>
-    </div>
-
-    <app-table
-        [columns]="columns"
-        [data]="activities"
-        (itemClicked)="onDropdownItemClick($event)" />
+  <ng-container content>
+    @if (pagination) {
+      <app-table
+          [columns]="columns"
+          [data]="activities | paginate : {
+                    itemsPerPage: pagination.perPage,
+                    currentPage: pagination.currentPage,
+                    totalItems: pagination.total
+                  }"
+          (itemClicked)="onDropdownItemClick($event)" />
+    }
 
     <app-confirm-dialog
         *ngIf="showConfirmDialog"
         [message]="'Do you want to proceed?'"
         (confirmed)="onConfirmation($event)" />
   </ng-container>
-  <ng-container pagination>
-      <!-- <app-pagination [pagination]="pagination" (pageChange)="onPageChanged($event)"></app-pagination> -->
+  <ng-container footer>
+      <app-pagination [pagination]="pagination" (pageChange)="onPageChanged($event)"></app-pagination>
   </ng-container>
 
 </app-card-collections>

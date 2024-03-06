@@ -1,4 +1,4 @@
-import { Component, DestroyRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, take, takeUntil, timer } from 'rxjs';
 
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
@@ -82,7 +82,7 @@ export class CategoryCollectionsComponent implements OnInit, OnDestroy {
       .searchWithPaging(query, this.page, this.perPage)
       .pipe(takeUntil(this.destroyed))
       .subscribe({
-        next: (response) => {
+        next: (response: any) => {
           this.categories = response.body.data.items;
           this.pagination = response.body.data.pagination;
         },
@@ -126,7 +126,6 @@ export class CategoryCollectionsComponent implements OnInit, OnDestroy {
   }
 
   onSearch(query: string): void {
-    console.log(query);
     this.searchFromServer(query);
   }
 

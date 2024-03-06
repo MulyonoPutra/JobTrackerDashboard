@@ -60,9 +60,10 @@ export class ActivityCollectionsComponent implements OnInit, OnDestroy {
   }
 
   findAll(): void {
-    this._activityService.findAll().pipe(takeUntil(this.destroyed)).subscribe({
-      next: (response: Activities) => {
-        this.activities = response;
+    this._activityService.findAll(this.page, this.perPage).pipe(takeUntil(this.destroyed)).subscribe({
+      next: (response: any) => {
+        this.activities = response.data.items;
+        this.pagination = response.data.pagination;
       },
       error: (error: HttpErrorResponse) => {
         this.errorMessage(error);

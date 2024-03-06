@@ -1,44 +1,43 @@
-<div class="p-6">
-  <div class="card-container">
-    <form [formGroup]="form">
-      <div class="py-4">
-        <app-form-field
-            [formGroup]="form"
-            [label]="'Position'"
-            [placeholder]="'Position'"
-            fieldName="position"
-        />
-      </div>
-      <div class="py-4">
-        <app-form-field [formGroup]="form" [label]="'Company Name'" fieldName="companyName"
-          [placeholder]="'Company Name'" />
-      </div>
-      <div class="py-4">
-        <app-form-field [formGroup]="form" [label]="'Location'" fieldName="location" [placeholder]="'Location'" />
-      </div>
-      <div class="py-4">
-        <app-form-select [formGroup]="form" fieldName="jobType" id="jobType" label="Job Type"
-          placeholder="Select Job Type" [options]="jobTypes" [valueField]="'name'" />
-      </div>
+<app-card-collections [title]="label + ' Activities'">
+  <ng-container content>
+    <div>
+      <form [formGroup]="form">
+        <div class="py-4">
+          <app-form-field [formGroup]="form" [label]="'Position'" [placeholder]="'Position'" fieldName="position" />
+        </div>
+        <div class="py-4">
+          <app-form-field [formGroup]="form" [label]="'Company Name'" fieldName="companyName"
+            [placeholder]="'Company Name'" />
+        </div>
+        <div class="py-4">
+          <app-form-field [formGroup]="form" [label]="'Location'" fieldName="location" [placeholder]="'Location'" />
+        </div>
+        <div class="py-4">
+          <app-form-select [formGroup]="form" fieldName="jobType" id="jobType" label="Job Type"
+            placeholder="Select Job Type" [options]="jobTypes" [valueField]="'name'" />
+        </div>
 
-      <div class="py-4">
-        <app-form-select [formGroup]="form" fieldName="categoryId" id="categoryId" label="Category"
-          placeholder="Select Category" [options]="categories" [valueField]="'id'" />
-      </div>
+        <div class="py-4">
+          <app-form-select [formGroup]="form" fieldName="categoryId" id="categoryId" label="Category"
+            placeholder="Select Category" [options]="categories" [valueField]="'id'" />
+        </div>
 
-      <div class="py-4">
-        <app-form-select [formGroup]="form" fieldName="status" id="status" label="Status"
-          placeholder="Select Status" [options]="status" [valueField]="'name'" />
-      </div>
+        <div class="py-4">
+          <app-form-select [formGroup]="form" fieldName="status" id="status" label="Status" placeholder="Select Status"
+            [options]="status" [valueField]="'name'" />
+        </div>
 
-      <app-datepicker [label]="'Job Posted'" formControlName="jobPosted" />
-      <app-datepicker [label]="'Applied On'" formControlName="appliedOn" />
+        <app-datepicker [label]="'Job Posted'" formControlName="jobPosted" />
+        <app-datepicker [label]="'Applied On'" formControlName="appliedOn" />
 
-      <div class="mt-6 flex items-center gap-3">
-        <app-button [label]="label" (clicked)="onSubmit()" [isDisabled]="form.invalid" />
-        <app-button [label]="'Cancel'" (clicked)="goBack()" />
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
+  </ng-container>
+  <ng-container footer>
+    <div class="flex items-center gap-3">
+      <app-button [label]="label" (clicked)="onSubmit()" [isDisabled]="form.invalid" />
+      <app-button [label]="'Cancel'" (clicked)="goBack()" />
+    </div>
+  </ng-container>
 
-</div>
+</app-card-collections>

@@ -15,9 +15,22 @@ export class ActivityService {
   env = 'http://localhost:3000';
   constructor(private readonly http: HttpClient) { }
 
-  findAll(): Observable<Activities> {
-    return this.http.get<HttpResponseEntity<Activities>>(`${this.env}/activity`).pipe(
-      map((response) => response.data),
+  findAll(page?: number, perPage?: number): Observable<any> {
+
+    let endpoint = `${this.env}/activity`;
+
+    const params: { [param: string]: string } = {};
+    if (page) params['page'] = page.toString();
+    if (perPage) params['perPage'] = perPage.toString();
+
+    // Construct URL with query parameters
+    if (Object.keys(params).length > 0) {
+      const queryParams = new URLSearchParams(params).toString();
+      endpoint += `?${queryParams}`;
+    }
+
+    return this.http.get<any>(endpoint).pipe(
+      map((response) => response),
       catchError((error: HttpErrorResponse) => handlerHttpError(error))
     );
   }

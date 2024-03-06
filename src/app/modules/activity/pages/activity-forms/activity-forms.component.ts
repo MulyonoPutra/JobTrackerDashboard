@@ -7,6 +7,7 @@ import { Subject, take, takeUntil, timer } from 'rxjs';
 import { Activity } from 'src/app/core/models/activity';
 import { ActivityService } from 'src/app/core/services/activity.service';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
+import { CardCollectionsComponent } from 'src/app/shared/components/card-collections/card-collections.component';
 import { Categories } from 'src/app/core/models/category';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { DatepickerComponent } from 'src/app/shared/components/datepicker/datepicker.component';
@@ -26,7 +27,8 @@ import { ValidationService } from 'src/app/core/services/validation.service';
     ReactiveFormsModule,
     ButtonComponent,
     FormSelectComponent,
-    DatepickerComponent
+    DatepickerComponent,
+    CardCollectionsComponent
   ],
   templateUrl: './activity-forms.component.html',
   styleUrls: ['./activity-forms.component.scss'],
@@ -42,6 +44,8 @@ export class ActivityFormsComponent implements OnInit, AfterViewInit, OnDestroy 
   jobTypes!: any[];
   status!: any[];
   categories!: Categories;
+
+  title = this.label + 'Activities';
 
   constructor(
     private readonly fb: FormBuilder,
