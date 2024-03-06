@@ -25,7 +25,8 @@ import { ThemeService } from './core/services/theme.service';
     FormsModule,
     ReactiveFormsModule,
     AlertComponent,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+
   ],
   providers: [
     AuthInterceptorProvider, HttpRequestInterceptorProvider

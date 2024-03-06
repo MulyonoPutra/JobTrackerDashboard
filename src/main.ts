@@ -1,11 +1,13 @@
 import { BrowserModule, bootstrapApplication } from '@angular/platform-browser';
+import { HttpClient, HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 
 import { AppComponent } from './app/app.component';
 import { AppRoutingModule } from './app/app-routing.module';
 import { AuthInterceptorProvider } from './app/core/providers/auth-interceptor.provider';
-import { HttpClientModule } from '@angular/common/http';
 import { HttpRequestInterceptorProvider } from './app/core/providers/http-request-interceptor.provider';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from './environments/environment';
 
 if (environment.production) {
@@ -17,10 +19,17 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(BrowserModule, AppRoutingModule),
+    importProvidersFrom(BrowserModule, AppRoutingModule, TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    })),
     AuthInterceptorProvider,
     HttpRequestInterceptorProvider,
-    HttpClientModule
+    HttpClientModule,
+    provideHttpClient(),
   ],
 }).catch((err) => console.error(err));
 
@@ -35,4 +44,8 @@ function selfXSSWarning() {
       'font-weight:bold; font: 2em Arial; color: #e11d48;'
     );
   });
+}
+
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient);
 }

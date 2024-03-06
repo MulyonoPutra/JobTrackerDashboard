@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, take, takeUntil, timer } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { Activities } from 'src/app/core/models/activity';
 import { ActivityService } from 'src/app/core/services/activity.service';
@@ -24,6 +25,7 @@ import { ToastService } from 'src/app/core/services/toast.service';
   imports: [
     CommonModule,
     NgxPaginationModule,
+    TranslateModule,
     TableComponent,
     SearchFormComponent,
     ConfirmDialogComponent,
@@ -38,12 +40,19 @@ import { ToastService } from 'src/app/core/services/toast.service';
 })
 export class ActivityCollectionsComponent implements OnInit, OnDestroy {
   columns = ['companyName', 'position', 'location', 'status', 'jobPosted', 'category', 'appliedOn'];
+
+  titles!: string;
   activityId!: string;
+
   activities!: Activities;
+
   showConfirmDialog = false;
+
   pagination!: Pagination;
+
   page = 1;
   perPage = 5;
+
 
   private destroyed = new Subject();
 
@@ -53,6 +62,7 @@ export class ActivityCollectionsComponent implements OnInit, OnDestroy {
     private readonly router: Router,
     private readonly _activityService: ActivityService,
     private readonly _toastService: ToastService,
+    private readonly translate: TranslateService
   ) { }
 
   ngOnInit(): void {

@@ -3,6 +3,7 @@ import { Subject, takeUntil } from 'rxjs';
 
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { HttpErrorResponse } from '@angular/common/http';
+import { I18nMenuComponent } from './i18n-menu/i18n-menu.component';
 import { MenuService } from '../../services/menu.service';
 import { NavbarMenuComponent } from './navbar-menu/navbar-menu.component';
 import { NavbarMobileComponent } from './navbar-mobile/navbar-mobilecomponent';
@@ -21,6 +22,7 @@ import { UserService } from 'src/app/core/services/user.service';
 		NavbarMenuComponent,
 		ProfileMenuComponent,
 		NavbarMobileComponent,
+    I18nMenuComponent
 	],
   providers: [UserService]
 })
