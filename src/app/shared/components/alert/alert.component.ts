@@ -4,26 +4,22 @@ import { Toast } from 'src/app/core/models/toast';
 import { ToastService } from 'src/app/core/services/toast.service';
 
 @Component({
-  selector: 'app-alert',
-  standalone: true,
-  imports: [
-    CommonModule,
-  ],
-  templateUrl: './alert.component.html',
-  styleUrls: ['./alert.component.scss'],
+	selector: 'app-alert',
+	standalone: true,
+	imports: [CommonModule],
+	templateUrl: './alert.component.html',
+	styleUrls: ['./alert.component.scss'],
 })
 export class AlertComponent {
+	toasts: Toast[] = [];
 
-  toasts: Toast[] = [];
+	constructor(public toastService: ToastService) {
+		toastService.toasts$.subscribe((toasts) => (this.toasts = toasts));
+	}
 
-  constructor(public toastService: ToastService) {
-    toastService.toasts$
-      .subscribe(toasts => this.toasts = toasts);
-  }
-
-  remove(index: number) {
-    this.toastService.remove(index);
-  }
+	remove(index: number) {
+		this.toastService.remove(index);
+	}
 }
 
 /*

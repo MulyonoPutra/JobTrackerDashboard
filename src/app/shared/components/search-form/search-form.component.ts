@@ -6,25 +6,25 @@ import { FormsModule } from '@angular/forms';
 import { SearchDirective } from '../../directives/search.directive';
 
 @Component({
-  selector: 'app-search-form',
-  standalone: true,
-  imports: [CommonModule, ButtonComponent, FormsModule, SearchDirective],
-  templateUrl: './search-form.component.html',
-  styleUrls: ['./search-form.component.scss'],
+	selector: 'app-search-form',
+	standalone: true,
+	imports: [CommonModule, ButtonComponent, FormsModule, SearchDirective],
+	templateUrl: './search-form.component.html',
+	styleUrls: ['./search-form.component.scss'],
 })
 export class SearchFormComponent {
-  @Output() search = new EventEmitter<any>();
-  @Output() clear = new EventEmitter<any>();
+	@Output() search = new EventEmitter<any>();
+	@Output() clear = new EventEmitter<any>();
 
-  query: string = '';
+	query: string = '';
 
-  onSearch(event: string): void {
-    this.query = event;
-    this.search.emit(event);
-  }
+	onSearch(event: string): void {
+		this.query = event;
+		this.search.emit(event);
+	}
 
-  onClear(event: any): void {
-    this.query = event;
-    this.clear.emit(event);
-  }
+	onClear(event: any): void {
+		this.query = event;
+		this.clear.emit(event);
+	}
 }

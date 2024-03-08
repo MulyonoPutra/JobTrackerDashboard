@@ -1,66 +1,66 @@
 [
-  {
-    "label": "Applied",
-    "value": "applied"
-  },
-  {
-    "label": "Under Review",
-    "value": "under_review"
-  },
-  {
-    "label": "Interviewing",
-    "value": "interviewing"
-  },
-  {
-    "label": "Offer Extended",
-    "value": "offer_extended"
-  },
-  {
-    "label": "Offer Accepted",
-    "value": "offer_accepted"
-  },
-  {
-    "label": "Offer Declined",
-    "value": "offer_declined"
-  },
-  {
-    "label": "Onboarding",
-    "value": "onboarding"
-  },
-  {
-    "label": "Training",
-    "value": "training"
-  },
-  {
-    "label": "Active",
-    "value": "active"
-  },
-  {
-    "label": "Inactive",
-    "value": "inactive"
-  },
-  {
-    "label": "Withdrawn",
-    "value": "withdrawn"
-  },
-  {
-    "label": "Cancelled",
-    "value": "cancelled"
-  },
-  {
-    "label": "Pending",
-    "value": "pending"
-  },
-  {
-    "label": "Final Round",
-    "value": "final_round"
-  },
-  {
-    "label": "Awaiting Feedback",
-    "value": "awaiting_feedback"
-  },
-  {
-    "label": "Pending Approval",
-    "value": "pending_approval"
-  }
+	{
+		"label": "Applied",
+		"value": "applied"
+	},
+	{
+		"label": "Under Review",
+		"value": "under_review"
+	},
+	{
+		"label": "Interviewing",
+		"value": "interviewing"
+	},
+	{
+		"label": "Offer Extended",
+		"value": "offer_extended"
+	},
+	{
+		"label": "Offer Accepted",
+		"value": "offer_accepted"
+	},
+	{
+		"label": "Offer Declined",
+		"value": "offer_declined"
+	},
+	{
+		"label": "Onboarding",
+		"value": "onboarding"
+	},
+	{
+		"label": "Training",
+		"value": "training"
+	},
+	{
+		"label": "Active",
+		"value": "active"
+	},
+	{
+		"label": "Inactive",
+		"value": "inactive"
+	},
+	{
+		"label": "Withdrawn",
+		"value": "withdrawn"
+	},
+	{
+		"label": "Cancelled",
+		"value": "cancelled"
+	},
+	{
+		"label": "Pending",
+		"value": "pending"
+	},
+	{
+		"label": "Final Round",
+		"value": "final_round"
+	},
+	{
+		"label": "Awaiting Feedback",
+		"value": "awaiting_feedback"
+	},
+	{
+		"label": "Pending Approval",
+		"value": "pending_approval"
+	}
 ]

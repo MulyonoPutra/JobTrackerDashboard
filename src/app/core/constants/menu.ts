@@ -44,21 +44,21 @@ export class Menu {
 				},
 			],
 		},
-    {
-      group: 'Activity',
-      separator: false,
-      items: [
-        {
-          icon: 'assets/icons/heroicons/outline/users.svg',
-          label: 'Activity',
-          route: '/activities',
-          children: [
-            { label: 'Forms', route: '/activities/forms' },
-            { label: 'Collections', route: '/activities/collections' },
-          ],
-        },
-      ],
-    },
+		{
+			group: 'Activity',
+			separator: false,
+			items: [
+				{
+					icon: 'assets/icons/heroicons/outline/users.svg',
+					label: 'Activity',
+					route: '/activities',
+					children: [
+						{ label: 'Forms', route: '/activities/forms' },
+						{ label: 'Collections', route: '/activities/collections' },
+					],
+				},
+			],
+		},
 		// {
 		//   group: 'Collaboration',
 		//   separator: true,

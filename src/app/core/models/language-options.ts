@@ -1,5 +1,5 @@
 export interface LanguageOptions {
-  code: string;
-  name: string;
-  flagUrl: string
+	code: string;
+	name: string;
+	flagUrl: string;
 }

@@ -1,5 +1,5 @@
 {
-  "app": {
-    "title": "Buat {{value}} baru"
-  }
+	"app": {
+		"title": "Buat {{value}} baru"
+	}
 }

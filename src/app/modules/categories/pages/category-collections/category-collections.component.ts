@@ -20,136 +20,142 @@ import { TableComponent } from 'src/app/shared/components/table/table.component'
 import { ToastService } from 'src/app/core/services/toast.service';
 
 @Component({
-  selector: 'app-category-collections',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    TableComponent,
-    SearchFormComponent,
-    ConfirmDialogComponent,
-    PaginationComponent,
-    NgxPaginationModule,
-    CardCollectionsComponent,
-    ButtonComponent
-  ],
-  templateUrl: './category-collections.component.html',
-  styleUrls: ['./category-collections.component.scss'],
-  providers: [CategoryService],
+	selector: 'app-category-collections',
+	standalone: true,
+	imports: [
+		CommonModule,
+		FormsModule,
+		TableComponent,
+		SearchFormComponent,
+		ConfirmDialogComponent,
+		PaginationComponent,
+		NgxPaginationModule,
+		CardCollectionsComponent,
+		ButtonComponent,
+	],
+	templateUrl: './category-collections.component.html',
+	styleUrls: ['./category-collections.component.scss'],
+	providers: [CategoryService],
 })
 export class CategoryCollectionsComponent implements OnInit, OnDestroy {
-  private destroyed = new Subject();
+	private destroyed = new Subject();
 
-  columns = ['id', 'name'];
-  categories!: Categories;
-  categoryId!: string;
-  pagination!: Pagination;
-  showConfirmDialog = false;
-  page = 1;
-  perPage = 5;
+	columns = ['id', 'name'];
+	categories!: Categories;
+	categoryId!: string;
+	pagination!: Pagination;
+	showConfirmDialog = false;
+	page = 1;
+	perPage = 5;
 
-  constructor(
-    private readonly categoryService: CategoryService,
-    private readonly router: Router,
-    private readonly _toastService: ToastService,
-  ) { }
+	constructor(
+		private readonly categoryService: CategoryService,
+		private readonly router: Router,
+		private readonly _toastService: ToastService
+	) {}
 
-  ngOnInit(): void {
-    this.searchFromServer();
-  }
+	ngOnInit(): void {
+		this.searchFromServer();
+	}
 
-  onDropdownItemClick(menu: DropdownMenu): void {
-    this.categoryId = menu.id;
-    if (menu.item === 'edit') {
-      this.router.navigateByUrl(`/categories/update/${menu.id}`);
-    } else {
-      this.showConfirmationDialog();
-    }
-  }
+	onDropdownItemClick(menu: DropdownMenu): void {
+		this.categoryId = menu.id;
+		if (menu.item === 'edit') {
+			this.router.navigateByUrl(`/categories/update/${menu.id}`);
+		} else {
+			this.showConfirmationDialog();
+		}
+	}
 
-  onUpdate(item: string, body: CategoryDTO) {
-    this.categoryService.update(item, body).pipe(takeUntil(this.destroyed)).subscribe({
-      next: () => { },
-      error: (error: HttpErrorResponse) => {
-        this.errorMessage(error);
-      },
-      complete: () => { },
-    });
-  }
+	onUpdate(item: string, body: CategoryDTO) {
+		this.categoryService
+			.update(item, body)
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: () => {},
+				error: (error: HttpErrorResponse) => {
+					this.errorMessage(error);
+				},
+				complete: () => {},
+			});
+	}
 
-  searchFromServer(query?: string) {
-    this.categoryService
-      .searchWithPaging(query, this.page, this.perPage)
-      .pipe(takeUntil(this.destroyed))
-      .subscribe({
-        next: (response: any) => {
-          this.categories = response.body.data.items;
-          this.pagination = response.body.data.pagination;
-        },
-        error: (error: HttpErrorResponse) => {
-          this.errorMessage(error);
-        },
-        complete: () => { },
-      });
-  }
+	searchFromServer(query?: string) {
+		this.categoryService
+			.searchWithPaging(query, this.page, this.perPage)
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: (response: any) => {
+					this.categories = response.body.data.items;
+					this.pagination = response.body.data.pagination;
+				},
+				error: (error: HttpErrorResponse) => {
+					this.errorMessage(error);
+				},
+				complete: () => {},
+			});
+	}
 
-  onPageChanged(event: number): void {
-    this.page = event;
-    this.searchFromServer();
-  }
+	onPageChanged(event: number): void {
+		this.page = event;
+		this.searchFromServer();
+	}
 
-  onRemove(item: string) {
-    this.categoryService.remove(item).pipe(takeUntil(this.destroyed)).subscribe({
-      next: () => { },
-      error: (error: HttpErrorResponse) => {
-        this.errorMessage(error);
-      },
-      complete: () => {
-        this._toastService.showSuccess('Removed!', 'Successfully removed');
-        this.navigateAfterSucceed();
-      },
-    });
-  }
+	onRemove(item: string) {
+		this.categoryService
+			.remove(item)
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: () => {},
+				error: (error: HttpErrorResponse) => {
+					this.errorMessage(error);
+				},
+				complete: () => {
+					this._toastService.showSuccess('Removed!', 'Successfully removed');
+					this.navigateAfterSucceed();
+				},
+			});
+	}
 
-  createNew(): void {
-    this.router.navigate(['/categories/forms']);
-  }
+	createNew(): void {
+		this.router.navigate(['/categories/forms']);
+	}
 
-  navigateAfterSucceed(): void {
-    timer(1000)
-      .pipe(take(1))
-      .subscribe(() =>
-        this.router
-          .navigateByUrl('/categories/collections')
-          .then(() => window.location.reload())
-      );
-  }
+	navigateAfterSucceed(): void {
+		timer(1000)
+			.pipe(take(1))
+			.subscribe(() =>
+				this.router
+					.navigateByUrl('/categories/collections')
+					.then(() => window.location.reload())
+			);
+	}
 
-  onSearch(query: string): void {
-    this.searchFromServer(query);
-  }
+	onSearch(query: string): void {
+		this.searchFromServer(query);
+	}
 
-  onClearInput(query: string): void {
-    this.searchFromServer(query);
-  }
+	onClearInput(query: string): void {
+		this.searchFromServer(query);
+	}
 
-  showConfirmationDialog(): void {
-    this.showConfirmDialog = true;
-  }
+	showConfirmationDialog(): void {
+		this.showConfirmDialog = true;
+	}
 
-  onConfirmation(confirmed: boolean): void {
-    this.showConfirmDialog = false;
-    if (confirmed) {
-      this.onRemove(this.categoryId);
-    }
-  }
+	onConfirmation(confirmed: boolean): void {
+		this.showConfirmDialog = false;
+		if (confirmed) {
+			this.onRemove(this.categoryId);
+		}
+	}
 
-  private errorMessage(error: HttpErrorResponse) {
-    this._toastService.showError('Error!', error.message);
-  }
+	private errorMessage(error: HttpErrorResponse) {
+		this._toastService.showError('Error!', error.message);
+	}
 
-  ngOnDestroy() {
-    this.destroyed.next(true);
-    this.destroyed.complete();
-  }
+	ngOnDestroy() {
+		this.destroyed.next(true);
+		this.destroyed.complete();
+	}
 }

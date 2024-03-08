@@ -8,33 +8,39 @@ import { StatusBadgesComponent } from '../status-badges/status-badges.component'
 import { TextOverflowPipe } from '../../pipes/text-overflow.pipe';
 
 @Component({
-  selector: 'app-table',
-  standalone: true,
-  imports: [CommonModule, TextOverflowPipe, SeparateCapitalWordsPipe, CustomDatePipe, StatusBadgesComponent],
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
+	selector: 'app-table',
+	standalone: true,
+	imports: [
+		CommonModule,
+		TextOverflowPipe,
+		SeparateCapitalWordsPipe,
+		CustomDatePipe,
+		StatusBadgesComponent,
+	],
+	templateUrl: './table.component.html',
+	styleUrls: ['./table.component.scss'],
 })
 export class TableComponent {
-  @Input() columns: string[] = [];
-  @Input() data: any;
-  @Output() itemClicked = new EventEmitter<DropdownMenu>();
+	@Input() columns: string[] = [];
+	@Input() data: any;
+	@Output() itemClicked = new EventEmitter<DropdownMenu>();
 
-  public isMenuOpen = false;
+	public isMenuOpen = false;
 
-  public menus = ['edit', 'delete'];
-  private row!: Record<string, any>;
+	public menus = ['edit', 'delete'];
+	private row!: Record<string, any>;
 
-  public toggleMenu(row: any): void {
-    this.row = row;
-    this.isMenuOpen = !this.isMenuOpen;
-  }
+	public toggleMenu(row: any): void {
+		this.row = row;
+		this.isMenuOpen = !this.isMenuOpen;
+	}
 
-  onItemClick(item: string): void {
-    const dropdownMenu: DropdownMenu = {
-      item,
-      id: this.row['id'],
-    };
-    this.itemClicked.emit(dropdownMenu);
-    this.isMenuOpen = false;
-  }
+	onItemClick(item: string): void {
+		const dropdownMenu: DropdownMenu = {
+			item,
+			id: this.row['id'],
+		};
+		this.itemClicked.emit(dropdownMenu);
+		this.isMenuOpen = false;
+	}
 }

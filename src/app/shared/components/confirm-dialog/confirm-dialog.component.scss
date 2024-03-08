@@ -1,32 +1,33 @@
 :host {
-  display: block;
+	display: block;
 }
 
 .wrapper {
-  @apply container fixed z-50 mx-auto flex w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full;
+	@apply container fixed z-50 mx-auto flex w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0 md:h-full;
 
-  .content {
-    @apply relative rounded-lg bg-white p-4 text-center shadow dark:bg-night-800 sm:p-5;
+	.content {
+		@apply relative rounded-lg bg-white p-4 text-center shadow dark:bg-night-800 sm:p-5;
 
-    img {
-      @apply mx-auto mb-3.5 flex h-11 w-11 justify-center text-gray-400 dark:text-gray-500;
-      filter: invert(56%) sepia(5%) saturate(16%) hue-rotate(354deg) brightness(88%) contrast(91%);
-    }
+		img {
+			@apply mx-auto mb-3.5 flex h-11 w-11 justify-center text-gray-400 dark:text-gray-500;
+			filter: invert(56%) sepia(5%) saturate(16%) hue-rotate(354deg) brightness(88%)
+				contrast(91%);
+		}
 
-    p {
-      @apply mb-4 text-gray-500 dark:text-gray-300;
-    }
+		p {
+			@apply mb-4 text-gray-500 dark:text-gray-300;
+		}
 
-    div {
-      @apply flex items-center justify-center space-x-4;
+		div {
+			@apply flex items-center justify-center space-x-4;
 
-      .confirm {
-        @apply rounded-lg bg-green-600 px-3 py-2 text-center text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-green-300 hover:bg-green-700 dark:bg-green-500 dark:focus:ring-green-900 dark:hover:bg-green-600;
-      }
+			.confirm {
+				@apply rounded-lg bg-green-600 px-3 py-2 text-center text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-green-300 hover:bg-green-700 dark:bg-green-500 dark:focus:ring-green-900 dark:hover:bg-green-600;
+			}
 
-      .cancel {
-        @apply rounded-lg border border-night-200 bg-white px-3 py-2 text-sm font-medium text-night-500 focus:z-10 focus:outline-none focus:ring-4 focus:ring-primary-300 hover:bg-night-100 hover:text-night-900 dark:border-night-500 dark:bg-night-700 dark:text-night-300 dark:focus:ring-night-600 dark:hover:bg-night-600 dark:hover:text-white;
-      }
-    }
-  }
+			.cancel {
+				@apply rounded-lg border border-night-200 bg-white px-3 py-2 text-sm font-medium text-night-500 focus:z-10 focus:outline-none focus:ring-4 focus:ring-primary-300 hover:bg-night-100 hover:text-night-900 dark:border-night-500 dark:bg-night-700 dark:text-night-300 dark:focus:ring-night-600 dark:hover:bg-night-600 dark:hover:text-white;
+			}
+		}
+	}
 }

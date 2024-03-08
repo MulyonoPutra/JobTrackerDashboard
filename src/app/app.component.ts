@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet } from '@angular/router';
+import {
+	Event,
+	NavigationCancel,
+	NavigationEnd,
+	NavigationError,
+	NavigationStart,
+	Router,
+	RouterOutlet,
+} from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { take, timer } from 'rxjs';
 
@@ -13,60 +21,56 @@ import { ResponsiveHelperComponent } from './shared/components/responsive-helper
 import { ThemeService } from './core/services/theme.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  standalone: true,
-  imports: [
-    HttpClientModule,
-    NgClass,
-    RouterOutlet,
-    ResponsiveHelperComponent,
-    FormsModule,
-    ReactiveFormsModule,
-    AlertComponent,
-    LoadingIndicatorComponent,
-
-  ],
-  providers: [
-    AuthInterceptorProvider, HttpRequestInterceptorProvider
-  ]
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss'],
+	standalone: true,
+	imports: [
+		HttpClientModule,
+		NgClass,
+		RouterOutlet,
+		ResponsiveHelperComponent,
+		FormsModule,
+		ReactiveFormsModule,
+		AlertComponent,
+		LoadingIndicatorComponent,
+	],
+	providers: [AuthInterceptorProvider, HttpRequestInterceptorProvider],
 })
 export class AppComponent implements OnInit {
-  title = 'Job Tracker';
-  loadingIndicator!: boolean;
-  constructor(public themeService: ThemeService, private router: Router) {
-    this.showSpinner();
-  }
+	title = 'Job Tracker';
+	loadingIndicator!: boolean;
+	constructor(public themeService: ThemeService, private router: Router) {
+		this.showSpinner();
+	}
 
-  ngOnInit() {
-  }
+	ngOnInit() {}
 
-  showSpinner(): void {
-    this.router.events.subscribe((routeEvent: Event) => {
-      if (routeEvent instanceof NavigationStart) {
-        this.loadingIndicator = true;
-      }
+	showSpinner(): void {
+		this.router.events.subscribe((routeEvent: Event) => {
+			if (routeEvent instanceof NavigationStart) {
+				this.loadingIndicator = true;
+			}
 
-      if (routeEvent instanceof NavigationEnd) {
-        this.delay();
-      }
+			if (routeEvent instanceof NavigationEnd) {
+				this.delay();
+			}
 
-      if (
-        routeEvent instanceof NavigationEnd ||
-        routeEvent instanceof NavigationError ||
-        routeEvent instanceof NavigationCancel
-      ) {
-        this.delay();
-      }
-    });
-  }
+			if (
+				routeEvent instanceof NavigationEnd ||
+				routeEvent instanceof NavigationError ||
+				routeEvent instanceof NavigationCancel
+			) {
+				this.delay();
+			}
+		});
+	}
 
-  delay(): void {
-    timer(1000)
-      .pipe(take(1))
-      .subscribe(() => {
-        this.loadingIndicator = false;
-      });
-  }
+	delay(): void {
+		timer(1000)
+			.pipe(take(1))
+			.subscribe(() => {
+				this.loadingIndicator = false;
+			});
+	}
 }

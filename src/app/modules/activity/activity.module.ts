@@ -4,11 +4,8 @@ import { FormGuard } from 'src/app/core/guards/form.guard';
 import { NgModule } from '@angular/core';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    CommonModule,
-    ActivityRoutingModule,
-  ],
-  providers: [FormGuard]
+	declarations: [],
+	imports: [CommonModule, ActivityRoutingModule],
+	providers: [FormGuard],
 })
-export class ActivityModule { }
+export class ActivityModule {}

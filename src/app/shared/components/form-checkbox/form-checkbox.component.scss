@@ -1,19 +1,19 @@
 :host {
-  display: block;
+	display: block;
 }
 
 .errors {
-  &-message {
-    @apply blink text-sm font-semibold text-red-700;
-  }
+	&-message {
+		@apply blink text-sm font-semibold text-red-700;
+	}
 }
 
 .blink {
-  animation: blinker 1s linear infinite;
+	animation: blinker 1s linear infinite;
 }
 
 @keyframes blinker {
-  50% {
-    opacity: 0;
-  }
+	50% {
+		opacity: 0;
+	}
 }

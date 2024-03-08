@@ -9,5 +9,4 @@ import { RouterOutlet } from '@angular/router';
 	standalone: true,
 	imports: [AngularSvgIconModule, RouterOutlet],
 })
-export class AuthComponent {
-}
+export class AuthComponent {}

@@ -4,17 +4,14 @@ import { CommonModule } from '@angular/common';
 import { LoadingService } from '../../services/loading.service';
 
 @Component({
-  selector: 'app-loading-indicator',
-  standalone: true,
-  imports: [
-	CommonModule,
-  ],
-  templateUrl: './loading-indicator.component.html',
-  styleUrls: [ './loading-indicator.component.scss' ],
+	selector: 'app-loading-indicator',
+	standalone: true,
+	imports: [CommonModule],
+	templateUrl: './loading-indicator.component.html',
+	styleUrls: ['./loading-indicator.component.scss'],
 })
 export class LoadingIndicatorComponent {
-  @Input() loadingIndicator!: boolean;
+	@Input() loadingIndicator!: boolean;
 
-  protected loading = inject(LoadingService);
-
+	protected loading = inject(LoadingService);
 }

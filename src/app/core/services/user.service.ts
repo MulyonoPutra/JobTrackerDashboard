@@ -10,9 +10,8 @@ import { handlerHttpError } from '../utils/error-handler';
 	providedIn: 'root',
 })
 export class UserService {
-
 	env = 'http://localhost:3000';
-  
+
 	constructor(private readonly http: HttpClient) {}
 
 	findUser(): Observable<User> {
