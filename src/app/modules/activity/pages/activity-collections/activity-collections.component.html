@@ -15,10 +15,9 @@
           (itemClicked)="onDropdownItemClick($event)" />
     }
 
-    <app-confirm-dialog
-        *ngIf="showConfirmDialog"
-        [message]="'Do you want to proceed?'"
-        (confirmed)="onConfirmation($event)" />
+    @if (showConfirmDialog) {
+      <app-confirm-dialog [message]="'Do you want to proceed?'" (confirmed)="onConfirmation($event)" />
+    }
   </ng-container>
   <ng-container footer>
       <app-pagination [pagination]="pagination" (pageChange)="onPageChanged($event)"></app-pagination>

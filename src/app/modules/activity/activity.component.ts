@@ -1,5 +1,6 @@
+import { Component, OnInit } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { Component, type OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
@@ -8,11 +9,6 @@ import { RouterOutlet } from '@angular/router';
   imports: [
     CommonModule, RouterOutlet
   ],
-  templateUrl: './activity.component.html',
-  styleUrls: [ './activity.component.scss' ],
+  template: `<router-outlet></router-outlet>`,
 })
-export class ActivityComponent implements OnInit {
-
-  ngOnInit(): void { }
-
-}
+export class ActivityComponent {}

@@ -1,4 +1,5 @@
-<div class="dropdown relative inline-block z-50" *ngFor="let menu of menuService.pagesMenu">
+@for (menu of menuService.pagesMenu; track $index) {
+  <div class="dropdown relative inline-block z-50">
   <!-- Button -->
   <button
     [ngClass]="
@@ -15,3 +16,4 @@
     navbar-submenu
     [submenu]="menu.items"></div>
 </div>
+}
