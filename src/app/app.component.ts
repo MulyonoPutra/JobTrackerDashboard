@@ -33,7 +33,7 @@ import { ThemeService } from './core/services/theme.service';
   ]
 })
 export class AppComponent implements OnInit {
-  title = 'Angular Tailwind';
+  title = 'Job Tracker';
   loadingIndicator!: boolean;
   constructor(public themeService: ThemeService, private router: Router) {
     this.showSpinner();

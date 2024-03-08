@@ -52,12 +52,18 @@ export class CategoryFormsComponent implements OnInit {
   }
 
   initPageFromRouteId(): void {
+    this.label = this.routeId ? 'Update' : 'Create';
     if (this.routeId) {
       this.findOne();
-      this.label = 'Update';
-    } else {
-      this.label = 'Create';
     }
+  }
+
+  get submitButtonLabel(): string {
+    return this.label;
+  }
+
+  get cancelButtonLabel(): string {
+    return 'Cancel';
   }
 
   formInitialized(): void {

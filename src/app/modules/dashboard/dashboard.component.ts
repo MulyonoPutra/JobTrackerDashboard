@@ -1,14 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
 	selector: 'app-dashboard',
-	templateUrl: './dashboard.component.html',
+  template:`<router-outlet></router-outlet>`,
 	standalone: true,
 	imports: [RouterOutlet],
 })
-export class DashboardComponent implements OnInit {
-	constructor() {}
-
-	ngOnInit(): void {}
+export class DashboardComponent {
 }
