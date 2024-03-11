@@ -1,5 +1,9 @@
 {
 	"app": {
-		"title": "Create New {{value}}"
+		"title": {
+      "list" : "List",
+      "new": "New",
+      "update": "Update"
+    }
 	}
 }

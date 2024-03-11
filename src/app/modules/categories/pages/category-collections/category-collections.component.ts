@@ -2,13 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, take, takeUntil, timer } from 'rxjs';
 
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
-import { CardCollectionsComponent } from 'src/app/shared/components/card-collections/card-collections.component';
+import { CardWrapperComponent } from 'src/app/shared/components/card-wrapper/card-wrapper.component';
 import { Categories } from 'src/app/core/models/category';
 import { CategoryDTO } from 'src/app/core/dto/create-category.dto';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { CommonModule } from '@angular/common';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { DropdownMenu } from 'src/app/core/models/dropdown-menu';
+import { EmptyRecordMessageComponent } from 'src/app/shared/components/empty-record-message/empty-record-message.component';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -30,8 +31,9 @@ import { ToastService } from 'src/app/core/services/toast.service';
 		ConfirmDialogComponent,
 		PaginationComponent,
 		NgxPaginationModule,
-		CardCollectionsComponent,
 		ButtonComponent,
+    CardWrapperComponent,
+    EmptyRecordMessageComponent
 	],
 	templateUrl: './category-collections.component.html',
 	styleUrls: ['./category-collections.component.scss'],

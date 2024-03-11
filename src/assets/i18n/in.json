@@ -1,5 +1,9 @@
 {
-	"app": {
-		"title": "Buat {{value}} baru"
-	}
+  "app": {
+    "title": {
+      "list": "List",
+      "new": "Baru",
+      "update": "Rubah"
+    }
+  }
 }

@@ -2,7 +2,7 @@
 <app-empty-record-message [routes]="newFormsRoute" />
 } -->
 
-<app-card-collections [title]="'Activities'">
+<app-card-wrapper [title]="'Activities'">
   <ng-container content>
     @if (pagination) {
       <app-table
@@ -23,6 +23,6 @@
       <app-pagination [pagination]="pagination" (pageChange)="onPageChanged($event)"></app-pagination>
   </ng-container>
 
-</app-card-collections>
+</app-card-wrapper>
 
 

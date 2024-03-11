@@ -13,7 +13,7 @@ import { Subject, take, takeUntil, timer } from 'rxjs';
 import { Activity } from 'src/app/core/models/activity';
 import { ActivityService } from 'src/app/core/services/activity.service';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
-import { CardCollectionsComponent } from 'src/app/shared/components/card-collections/card-collections.component';
+import { CardWrapperComponent } from 'src/app/shared/components/card-wrapper/card-wrapper.component';
 import { Categories } from 'src/app/core/models/category';
 import { CategoryService } from 'src/app/core/services/category.service';
 import { DatepickerComponent } from 'src/app/shared/components/datepicker/datepicker.component';
@@ -34,7 +34,7 @@ import { ValidationService } from 'src/app/core/services/validation.service';
 		ButtonComponent,
 		FormSelectComponent,
 		DatepickerComponent,
-		CardCollectionsComponent,
+    CardWrapperComponent
 	],
 	templateUrl: './activity-forms.component.html',
 	styleUrls: ['./activity-forms.component.scss'],

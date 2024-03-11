@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ThemeService } from 'src/app/core/services/theme.service';
-import packageJson from '../../../../../../package.json';
+import { NgClass, NgIf } from '@angular/common';
+
+import { AngularSvgIconModule } from 'angular-svg-icon';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { MenuService } from '../../services/menu.service';
 import { RouterLink } from '@angular/router';
 import { SidebarMenuComponent } from './sidebar-menu/sidebar-menu.component';
-import { AngularSvgIconModule } from 'angular-svg-icon';
-import { NgClass, NgIf } from '@angular/common';
+import { ThemeService } from 'src/app/core/services/theme.service';
+import packageJson from '../../../../../../package.json';
 
 @Component({
 	selector: 'app-sidebar',
@@ -17,7 +19,10 @@ import { NgClass, NgIf } from '@angular/common';
 export class SidebarComponent implements OnInit {
 	public appJson: any = packageJson;
 
-	constructor(public themeService: ThemeService, public menuService: MenuService) {}
+	constructor(
+    public readonly themeService: ThemeService,
+    public readonly menuService: MenuService,
+    public readonly authService: AuthService) {}
 
 	ngOnInit(): void {}
 
@@ -28,4 +33,8 @@ export class SidebarComponent implements OnInit {
 	toggleTheme() {
 		this.themeService.theme = !this.themeService.isDark ? 'dark' : 'light';
 	}
+
+  logout(): void {
+    this.authService.logout();
+  }
 }

@@ -5,7 +5,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Activities } from 'src/app/core/models/activity';
 import { ActivityService } from 'src/app/core/services/activity.service';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
-import { CardCollectionsComponent } from 'src/app/shared/components/card-collections/card-collections.component';
+import { CardWrapperComponent } from 'src/app/shared/components/card-wrapper/card-wrapper.component';
 import { CommonModule } from '@angular/common';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { DropdownMenu } from 'src/app/core/models/dropdown-menu';
@@ -32,7 +32,7 @@ import { ToastService } from 'src/app/core/services/toast.service';
 		PaginationComponent,
 		EmptyRecordMessageComponent,
 		ButtonComponent,
-		CardCollectionsComponent,
+    CardWrapperComponent
 	],
 	templateUrl: './activity-collections.component.html',
 	styleUrls: ['./activity-collections.component.scss'],

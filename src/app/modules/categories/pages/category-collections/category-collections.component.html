@@ -1,28 +1,31 @@
-  <app-card-collections [title]="'Categories'">
-    <ng-container content class="z-0">
-      <div class="flex space-x-4">
-        <div class="w-full">
-          <app-search-form (search)="onSearch($event)" (clear)="onClearInput($event)" />
-        </div>
-        <div class="mx-auto mt-2">
-          <app-button [label]="'Create'" (clicked)="createNew()" />
-        </div>
+@if (categories &&  categories.length <= 0) {
+  <app-empty-record-message [routes]="'/categories/forms'" />
+} @else {
+<app-card-wrapper [title]="'Categories'">
+  <ng-container content>
+    <div class="flex space-x-4">
+      <div class="w-full">
+        <app-search-form (search)="onSearch($event)" (clear)="onClearInput($event)" />
       </div>
-      @if (pagination) {
-      <app-table [columns]="columns" [data]="categories | paginate : {
+      <div class="mx-auto mt-2">
+        <app-button [label]="'Create'" (clicked)="createNew()" />
+      </div>
+    </div>
+    @if (pagination) {
+    <app-table [columns]="columns" [data]="categories | paginate : {
                   itemsPerPage: pagination.perPage,
                   currentPage: pagination.currentPage,
                   totalItems: pagination.total
                 }" (itemClicked)="onDropdownItemClick($event)" />
-      }
+    }
 
-      @if (showConfirmDialog) {
-        <app-confirm-dialog [message]="'Do you want to proceed?'"
-          (confirmed)="onConfirmation($event)" />
-      }
-    </ng-container>
+    @if (showConfirmDialog) {
+    <app-confirm-dialog [message]="'Do you want to proceed?'" (confirmed)="onConfirmation($event)" />
+    }
+  </ng-container>
 
-    <ng-container footer>
-      <app-pagination [pagination]="pagination" (pageChange)="onPageChanged($event)"></app-pagination>
-    </ng-container>
-  </app-card-collections>
+  <ng-container footer>
+    <app-pagination [pagination]="pagination" (pageChange)="onPageChanged($event)"></app-pagination>
+  </ng-container>
+</app-card-wrapper>
+}
