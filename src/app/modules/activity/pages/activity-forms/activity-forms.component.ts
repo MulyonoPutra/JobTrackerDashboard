@@ -85,6 +85,7 @@ export class ActivityFormsComponent implements OnInit, AfterViewInit, OnDestroy 
 			status: ['', Validators.required],
 			appliedOn: ['', Validators.required],
 			jobPosted: ['', Validators.required],
+      platform: ['', Validators.required],
 			categoryId: ['', Validators.required],
 		});
 	}
@@ -113,6 +114,7 @@ export class ActivityFormsComponent implements OnInit, AfterViewInit, OnDestroy 
 			status: this.form.get('status')?.value,
 			appliedOn: this.form.get('appliedOn')?.value,
 			jobPosted: this.form.get('jobPosted')?.value,
+			platform: this.form.get('platform')?.value,
 			categoryId: this.form.get('categoryId')?.value,
 		};
 	}
@@ -127,6 +129,7 @@ export class ActivityFormsComponent implements OnInit, AfterViewInit, OnDestroy 
 			status: activity.status,
 			appliedOn: activity.appliedOn,
 			jobPosted: activity.jobPosted,
+			platform: activity.platform,
 			categoryId: activity.category.id,
 		});
 	}

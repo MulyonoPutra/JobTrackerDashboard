@@ -13,5 +13,6 @@ export interface Activity {
 	jobPosted: string;
 	category: Category;
 	appliedOn: string;
+  platform: string;
 	user: User;
 }

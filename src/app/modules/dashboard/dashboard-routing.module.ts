@@ -1,7 +1,9 @@
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
+import { ChartsComponent } from './components/chart/chart.component';
 import { DashboardComponent } from './dashboard.component';
 import { NftComponent } from './pages/nft/nft.component';
+import { NgModule } from '@angular/core';
 import { PodcastComponent } from './pages/podcast/podcast.component';
 
 const routes: Routes = [
@@ -12,6 +14,7 @@ const routes: Routes = [
 			{ path: '', redirectTo: 'nfts', pathMatch: 'full' },
 			{ path: 'nfts', component: NftComponent },
 			{ path: 'podcast', component: PodcastComponent },
+			{ path: 'chart', component: ChartsComponent },
 			{ path: '**', redirectTo: 'error/404' },
 		],
 	},

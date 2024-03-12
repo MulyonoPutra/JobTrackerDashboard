@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit, effect } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { ThemeService } from 'src/app/core/services/theme.service';
+
+import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ChartOptions } from '../../../../../shared/models/chart-options';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { AngularSvgIconModule } from 'angular-svg-icon';
+import { Subscription } from 'rxjs';
+import { ThemeService } from 'src/app/core/services/theme.service';
 
 @Component({
 	selector: '[nft-chart-card]',
@@ -14,7 +15,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 export class NftChartCardComponent implements OnInit, OnDestroy {
 	public chartOptions: Partial<ChartOptions>;
 
-	constructor(private themeService: ThemeService) {
+	constructor(private readonly themeService: ThemeService) {
 		const baseColor = '#7239ea';
 		const data = [
 			2100, 3200, 3200, 2400, 2400, 1800, 1800, 2400, 2400, 3200, 3200, 3000, 3000, 3250,
@@ -65,7 +66,7 @@ export class NftChartCardComponent implements OnInit, OnDestroy {
 					shadeIntensity: 1,
 					opacityFrom: 0.4,
 					opacityTo: 0.2,
-					stops: [15, 120, 100],
+					// stops: [15, 120, 100],
 				},
 			},
 			stroke: {

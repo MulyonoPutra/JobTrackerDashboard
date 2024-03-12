@@ -4,7 +4,6 @@ import { Observable, catchError, map, throwError } from 'rxjs';
 import { Credentials } from '../models/credentials';
 import { HttpResponseEntity } from '../models/http-response-entity';
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from './local-storage.service';
 import { Login } from '../models/login';
 import { Register } from '../models/register';
 import { StorageService } from './storage.service';
@@ -30,11 +29,10 @@ export class AuthService {
 		);
 	}
 
-	register(body: Register): Observable<Credentials> {
+	register(body: Register): Observable<any> {
 		return this.http
 			.post<HttpResponseEntity<Credentials>>(`${this.env}/auth/register`, body)
 			.pipe(
-				map((response) => response.data),
 				catchError((error: HttpErrorResponse) => handlerHttpError(error))
 			);
 	}

@@ -1,21 +1,21 @@
 import {
+	ApexAnnotations,
 	ApexAxisChartSeries,
 	ApexChart,
-	ApexXAxis,
-	ApexTitleSubtitle,
-	ApexLegend,
 	ApexDataLabels,
 	ApexFill,
-	ApexStroke,
-	ApexYAxis,
-	ApexStates,
-	ApexTooltip,
 	ApexGrid,
-	ApexTheme,
-	ApexAnnotations,
-	ApexResponsive,
-	ApexPlotOptions,
+	ApexLegend,
 	ApexMarkers,
+	ApexPlotOptions,
+	ApexResponsive,
+	ApexStates,
+	ApexStroke,
+	ApexTheme,
+	ApexTitleSubtitle,
+	ApexTooltip,
+	ApexXAxis,
+	ApexYAxis,
 } from 'ng-apexcharts';
 
 export type ChartOptions = {
@@ -38,4 +38,5 @@ export type ChartOptions = {
 	responsive: ApexResponsive[];
 	plotOptions: ApexPlotOptions;
 	markers: ApexMarkers;
+  labels: ApexDataLabels;
 };
