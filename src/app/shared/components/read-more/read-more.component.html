@@ -1,0 +1,15 @@
+ <div class="leading-6 p-4">
+  <div
+    class="text-sm text-gray-700 hover:text-gray-600 font-normal"
+    [innerHTML]="text"
+    [class.collapsed]="isCollapsed"
+    [style.height]="isCollapsed ? maxHeight+'px' : 'auto'">
+  </div>
+
+  @if (isCollapsable) {
+    <button type="button" class="font-semibold text-sm text-primary-600 hover:text-primary-500 hover:underline cursor-pointer"
+      (click)="isCollapsed =! isCollapsed">
+      Read {{ isCollapsed? 'more':'less' }}
+    </button>
+  }
+</div>

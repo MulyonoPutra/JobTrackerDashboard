@@ -17,6 +17,7 @@ export class FormFieldComponent {
 	@Input() fieldName!: string;
 	@Input() placeholder?: string;
 	@Input() formGroup!: FormGroup;
+	@Input() isDisabled!: FormGroup;
 
 	constructor(private validation: ValidationService) {}
 

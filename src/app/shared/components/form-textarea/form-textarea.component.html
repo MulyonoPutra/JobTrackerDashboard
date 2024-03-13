@@ -1,0 +1,11 @@
+ <div class="form__group relative" [formGroup]="formGroup">
+  <div class="relative">
+    <textarea type="text" class="peer block z-0"
+      [ngClass]="{ 'errors-field': isInvalid }"
+      [placeholder]="placeholder" [formControlName]="fieldName"> </textarea>
+    <label [ngClass]="{ 'errors-label': isInvalid }"> {{ label }} </label>
+  </div>
+  @if (isInvalid) {
+  <div class="errors-message">{{ errorMessage }}</div>
+  }
+</div>

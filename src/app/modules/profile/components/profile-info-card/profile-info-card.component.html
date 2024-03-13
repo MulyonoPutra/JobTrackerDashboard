@@ -1,0 +1,43 @@
+ <div class="col-span-4 sm:col-span-9 my-4">
+   <div class="bg-white shadow rounded-lg p-4">
+     <div class="flex items-center space-x-2 font-semibold text-gray-900">
+       <svg-icon [src]="icon" [svgClass]="'h-6 w-6 mr-2'">
+       </svg-icon>
+       <h2 class="text-xl font-bold">{{ title }}</h2>
+     </div>
+     <hr class="m-4">
+     <div class="mb-6">
+       @if (title === 'Education') {
+       @for (item of data; track $index) {
+          <ng-container>
+            <div class="flex justify-between flex-wrap gap-2 w-full mt-4">
+              <span class="text-gray-700 font-bold">{{ item.title | appTextOverflow: 29 }}</span>
+              <p>
+                <span class="text-primary-600 mr-2 text-sm font-semibold">at {{ item.institution }}</span>
+                <span class="text-gray-700 text-xs font-semibold">{{ item.startDate }} - {{ item.endDate }}</span>
+              </p>
+            </div>
+            <p class="mt-2 text-gray-700 text-sm">
+              {{ item.description }}
+            </p>
+          </ng-container>
+       }
+       } @else {
+       @for (item of data; track $index) {
+          <ng-container>
+            <div class="flex justify-between flex-wrap gap-2 w-full my-4">
+              <span class="text-gray-700 font-bold">{{ item.position }}</span>
+              <p>
+                <span class="text-primary-600 mr-2 text-sm font-semibold">at {{ item.company }}</span>
+                <span class="text-gray-700 text-xs font-semibold">{{ item.startDate }} - {{ item.endDate }}</span>
+              </p>
+            </div>
+            <p class="mt-2 text-gray-700 text-sm">
+              {{ item.responsibilities }}
+            </p>
+          </ng-container>
+       }
+       }
+     </div>
+   </div>
+ </div>
