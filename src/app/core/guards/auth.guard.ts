@@ -21,7 +21,6 @@ export class AuthenticationGuard {
 		const token = this.storage.getAccessToken();
 
 		if (!token) {
-			console.clear();
 			timer(2000)
 				.pipe(take(1))
 				.subscribe(() => {
