@@ -1,0 +1,17 @@
+ <ng-container *ngIf="experienceForm">
+  <div class="p-6 bg-white border-b border-gray-200">
+  <form [formGroup]="experienceForm">
+    <div formArrayName="experience">
+      <div *ngFor="let orgs of experienceForm.get('experience')?.value;  let i = index"
+        [formGroupName]="i">
+        <input formControlName="position" placeholder="Item name">
+        <input formControlName="location" placeholder="Item description">
+        </div>
+      </div>
+  </form>
+  </div>
+
+  <div class="p-6 bg-white border-gray-200 text-right rounded-b-lg">
+    <app-button [label]="'Save'" (clicked)="onSubmit()" />
+  </div>
+</ng-container>

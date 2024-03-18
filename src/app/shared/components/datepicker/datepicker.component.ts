@@ -121,3 +121,5 @@ export class DatepickerComponent implements OnInit {
 		// You can implement this if you want to handle disabling the control
 	}
 }
+
+// https://stackblitz.com/edit/angular-ni2jcj?file=src%2Fapp%2Fapp.component.html,src%2Fapp%2Fapp.component.ts,src%2Fapp%2Fdate-time-range-picker%2Fdate-time-picker%2Fdate-time-range-picker.component.ts
