@@ -7,6 +7,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { AccordionComponent } from 'src/app/shared/components/accordion/accordion.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
+import { CalendarComponent } from 'src/app/shared/components/calendar/calendar.component';
+import { CalendarModule } from 'primeng/calendar';
 import { CardWrapperComponent } from 'src/app/shared/components/card-wrapper/card-wrapper.component';
 import { DatepickerComponent } from 'src/app/shared/components/datepicker/datepicker.component';
 import { FormFieldComponent } from 'src/app/shared/components/form-field/form-field.component';
@@ -34,7 +36,10 @@ import { randomAvatar } from 'src/app/core/utils/random-avatar';
     FormTextareaComponent,
     AccordionComponent,
     DatepickerComponent,
-    TitleWithIconComponent
+    TitleWithIconComponent,
+    CalendarModule,
+    CalendarComponent
+
   ],
   templateUrl: './about-forms.component.html',
   styleUrls: ['./about-forms.component.scss'],
@@ -108,7 +113,7 @@ export class AboutFormsComponent implements OnInit, OnDestroy {
       name: user.name,
       email: user.email,
       summary: user.summary,
-      birthday: user.birthday,
+      birthday: new Date(user.birthday),
       phone: user.phone,
     });
   }
@@ -126,6 +131,7 @@ export class AboutFormsComponent implements OnInit, OnDestroy {
   }
 
   onUpdate(): void {
+    console.log(this.profileForm.value);
     this.userService
       .updateProfile(this.profileFormCtrlValue)
       .pipe(takeUntil(this.destroyed))

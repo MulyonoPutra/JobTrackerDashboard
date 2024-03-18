@@ -16,9 +16,8 @@
             fieldName="phone" [placeholder]="'Phone'" />
         </div>
         <div class="pt-3">
-          <app-datepicker [label]="'Birthday'"
-            (dateSelected)="onBirthdaySelected($event)"
-            formControlName="birthday" />
+           <app-calendar [formGroup]="profileForm" [label]="'Birthday'"
+            fieldName="birthday" [placeholder]="'Birthday'" ></app-calendar>
         </div>
         <div class="pb-4">
           <app-form-textarea [formGroup]="profileForm" [label]="'summary'"
@@ -30,6 +29,6 @@
   </div>
 
   <div class="p-6 bg-white border-gray-200 text-right rounded-b-lg">
-    <app-button [label]="'Save'" (clicked)="onSubmit()" />
+    <app-button [label]="'Save'" (clicked)="onSubmit()" [isDisabled]="profileForm.invalid" />
   </div>
 </ng-container>

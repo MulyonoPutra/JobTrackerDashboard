@@ -1,0 +1,18 @@
+<div class="relative" [formGroup]="formGroup">
+  <div class="p-float-label">
+    <p-calendar
+      [iconDisplay]="'input'"
+      [showIcon]="true"
+      [inputStyleClass]="isInvalid ? 'border-error' : ''"
+      [formControlName]="fieldName"
+      [style]="{'width':'100%'}"
+      inputId="date">
+    </p-calendar>
+    <label for="date" [ngClass]="labelClass"> {{ label }} </label>
+  </div>
+  
+  @if (isInvalid) {
+  <div class="errors-message">{{ errorMessage }}</div>
+  }
+</div>
+
