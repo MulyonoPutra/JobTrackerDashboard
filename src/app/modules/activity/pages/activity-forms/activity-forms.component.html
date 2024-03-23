@@ -3,18 +3,18 @@
     <div>
       <form [formGroup]="form">
         <div class="py-4">
-          <app-form-field [formGroup]="form" [label]="'Position'" [placeholder]="'Position'" fieldName="position" />
+          <app-form-field [formGroup]="form" [label]="'Position'"  fieldName="position" />
         </div>
         <div class="py-4">
           <app-form-field [formGroup]="form" [label]="'Company Name'" fieldName="companyName"
-            [placeholder]="'Company Name'" />
+           />
         </div>
         <div class="py-4">
           <app-form-field [formGroup]="form" [label]="'Platform'" fieldName="platform"
-            [placeholder]="'Platform'" />
+             />
         </div>
         <div class="py-4">
-          <app-form-field [formGroup]="form" [label]="'Location'" fieldName="location" [placeholder]="'Location'" />
+          <app-form-field [formGroup]="form" [label]="'Location'" fieldName="location"  />
         </div>
         <div class="py-4">
           <app-form-select [formGroup]="form" fieldName="jobType" id="jobType" label="Job Type"

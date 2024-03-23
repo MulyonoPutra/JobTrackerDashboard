@@ -1,17 +1,29 @@
- <ng-container *ngIf="experienceForm">
+@if (experienceForm) {
+<ng-container>
   <div class="p-6 bg-white border-b border-gray-200">
-  <form [formGroup]="experienceForm">
-    <div formArrayName="experience">
-      <div *ngFor="let orgs of experienceForm.get('experience')?.value;  let i = index"
-        [formGroupName]="i">
-        <input formControlName="position" placeholder="Item name">
-        <input formControlName="location" placeholder="Item description">
-        </div>
-      </div>
-  </form>
-  </div>
+    <form [formGroup]="experienceForm">
+      <div formArrayName="experience">
+        @for (forms of experienceFormArray.controls; track $index) {
+        <div [formGroupName]="$index" class="border rounded-lg p-4 mt-4">
+          <div class="flex flex-col space-y-4 mt-4">
+            <div>
+              <app-form-field [formGroup]="experienceFormGroupIndex($index)" [label]="'location'"
+                fieldName="location" />
+            </div>
+            <div>
+              <app-form-field class="mt-4" [formGroup]="experienceFormGroupIndex($index)" [label]="'position'"
+                fieldName="position" />
+            </div>
+          </div>
 
+          <app-button class="mt-4" [label]="'Add'" (clicked)="onSubmit()" />
+        </div>
+        }
+      </div>
+    </form>
+  </div>
   <div class="p-6 bg-white border-gray-200 text-right rounded-b-lg">
     <app-button [label]="'Save'" (clicked)="onSubmit()" />
   </div>
 </ng-container>
+}

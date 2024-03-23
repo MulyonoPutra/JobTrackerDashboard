@@ -2,12 +2,13 @@ import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '@angular/common';
+import { FloatLabelModule } from 'primeng/floatlabel';
 import { ValidationService } from 'src/app/core/services/validation.service';
 
 @Component({
 	selector: 'app-form-field',
 	standalone: true,
-	imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, FloatLabelModule],
 	templateUrl: './form-field.component.html',
 	styleUrls: ['./form-field.component.scss'],
 	providers: [ValidationService],
@@ -15,7 +16,6 @@ import { ValidationService } from 'src/app/core/services/validation.service';
 export class FormFieldComponent {
 	@Input() label!: string;
 	@Input() fieldName!: string;
-	@Input() placeholder?: string;
 	@Input() formGroup!: FormGroup;
 	@Input() isDisabled!: FormGroup;
 
@@ -30,4 +30,16 @@ export class FormFieldComponent {
 		const control = this.formGroup.get(this.fieldName) as FormControl;
 		return this.validation.getErrorMessage(control);
 	}
+
+  get classLabel() {
+    return {
+      'label-valid': !this.isInvalid,
+      'label-invalid': this.isInvalid,
+    };
+  }
+
+   get classFilled(): { [key: string]: boolean } {
+    const isFilled = this.formGroup.get(this.fieldName)?.value !== '';
+    return { 'p-filled': isFilled };
+  }
 }

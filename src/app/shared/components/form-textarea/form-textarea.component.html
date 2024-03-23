@@ -1,9 +1,9 @@
- <div class="form__group relative" [formGroup]="formGroup">
-  <div class="relative">
-    <textarea type="text" class="peer block z-0"
-      [ngClass]="{ 'errors-field': isInvalid }"
-      [placeholder]="placeholder" [formControlName]="fieldName"> </textarea>
-    <label [ngClass]="{ 'errors-label': isInvalid }"> {{ label }} </label>
+<div class="mt-4 relative" [formGroup]="formGroup">
+  <div class="p-float-label">
+    <textarea id="form" type="text" class="peer block z-0" [style]="{'width':'100%'}" [ngClass]="classFilled" rows="5"
+      cols="30" pInputTextarea [formControlName]="fieldName">
+      </textarea>
+    <label for="form" [ngClass]="classLabel"> {{ label }} </label>
   </div>
   @if (isInvalid) {
   <div class="errors-message">{{ errorMessage }}</div>

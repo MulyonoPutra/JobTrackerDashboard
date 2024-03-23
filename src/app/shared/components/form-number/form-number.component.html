@@ -1,0 +1,11 @@
+<div class="form__group relative" [formGroup]="formGroup">
+  <div class="p-float-label">
+    <p-inputMask id="form" mask="(999) 999-999-999" class="peer block z-0" [style]="{'width':'100%'}"
+      [ngClass]="classFilled" [placeholder]="placeholder" [formControlName]="fieldName" >
+      </p-inputMask>
+    <label for="form" [ngClass]="classLabel"> {{ label }} </label>
+  @if (isInvalid) {
+  <div class="errors-message">{{ errorMessage }}</div>
+  }
+</div>
+</div>

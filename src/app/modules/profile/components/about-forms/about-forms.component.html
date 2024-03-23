@@ -1,34 +1,28 @@
  <ng-container>
-  <div class="p-6 bg-white border-b border-gray-200">
-    <form [formGroup]="profileForm">
-      <div class="grid grid-cols-2 gap-4">
-        <div class="pt-3">
-          <app-form-field [formGroup]="profileForm" [label]="'Name'"
-            fieldName="name" [placeholder]="'Name'" />
-        </div>
+   <div class="p-6 bg-white border-b border-gray-200">
+     <form [formGroup]="profileForm">
+       <div class="grid grid-cols-1 gap-4">
+         <div class="pt-3">
+           <app-form-field [formGroup]="profileForm" [label]="'Name'" fieldName="name" />
+         </div>
+         <div class="pt-3">
+           <app-form-field [formGroup]="profileForm" [label]="'Email'" fieldName="email" />
+         </div>
+         <div class="pt-3">
+           <app-form-number [formGroup]="profileForm" [label]="'Phone'" fieldName="phone" [placeholder]="'Phone'" />
+         </div>
+         <div class="pt-3">
+           <app-calendar [formGroup]="profileForm" [label]="'Birthday'" fieldName="birthday" [placeholder]="'Birthday'">
+           </app-calendar>
+         </div>
+         <div class="pb-4">
+           <app-form-textarea [formGroup]="profileForm" [label]="'summary'" fieldName="summary" />
+         </div>
+       </div>
+     </form>
+   </div>
 
-        <div class="pt-3">
-          <app-form-field [formGroup]="profileForm" [label]="'Email'"
-            fieldName="email" [placeholder]="'Email'" />
-        </div>
-        <div class="pt-3">
-          <app-form-field [formGroup]="profileForm" [label]="'Phone'"
-            fieldName="phone" [placeholder]="'Phone'" />
-        </div>
-        <div class="pt-3">
-           <app-calendar [formGroup]="profileForm" [label]="'Birthday'"
-            fieldName="birthday" [placeholder]="'Birthday'" ></app-calendar>
-        </div>
-        <div class="pb-4">
-          <app-form-textarea [formGroup]="profileForm" [label]="'summary'"
-            fieldName="summary"
-            [placeholder]="'summary'" />
-        </div>
-      </div>
-    </form>
-  </div>
-
-  <div class="p-6 bg-white border-gray-200 text-right rounded-b-lg">
-    <app-button [label]="'Save'" (clicked)="onSubmit()" [isDisabled]="profileForm.invalid" />
-  </div>
-</ng-container>
+   <div class="p-6 bg-white border-gray-200 text-right rounded-b-lg">
+     <app-button [label]="'Save'" (clicked)="onSubmit()" [isDisabled]="profileForm.invalid" />
+   </div>
+ </ng-container>

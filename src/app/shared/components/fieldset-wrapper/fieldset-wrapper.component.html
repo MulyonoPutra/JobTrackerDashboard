@@ -1,0 +1,13 @@
+<div class="container pb-4">
+  <p-panel header="{{ title }}" [toggleable]="toggle">
+    <ng-template pTemplate="icons">
+      <button pButton class="p-panel-header-icon mt-2"
+        (click)="menu.toggle($event)">
+        <span class="pi pi-code"></span>
+      </button>
+      <p-menu #menu [model]="items" [popup]="true" class="cursor-pointer">
+      </p-menu>
+    </ng-template>
+    <ng-content></ng-content>
+  </p-panel>
+</div>

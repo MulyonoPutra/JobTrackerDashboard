@@ -1,10 +1,9 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil, timer } from 'rxjs';
 
-import { AccordionComponent } from 'src/app/shared/components/accordion/accordion.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 import { CalendarComponent } from 'src/app/shared/components/calendar/calendar.component';
@@ -12,6 +11,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { CardWrapperComponent } from 'src/app/shared/components/card-wrapper/card-wrapper.component';
 import { DatepickerComponent } from 'src/app/shared/components/datepicker/datepicker.component';
 import { FormFieldComponent } from 'src/app/shared/components/form-field/form-field.component';
+import { FormNumberComponent } from 'src/app/shared/components/form-number/form-number.component';
 import { FormTextareaComponent } from 'src/app/shared/components/form-textarea/form-textarea.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TitleWithIconComponent } from 'src/app/shared/components/title-with-icon/title-with-icon.component';
@@ -34,11 +34,11 @@ import { randomAvatar } from 'src/app/core/utils/random-avatar';
     FormsModule,
     ReactiveFormsModule,
     FormTextareaComponent,
-    AccordionComponent,
     DatepickerComponent,
     TitleWithIconComponent,
     CalendarModule,
-    CalendarComponent
+    CalendarComponent,
+    FormNumberComponent
 
   ],
   templateUrl: './about-forms.component.html',
@@ -49,7 +49,8 @@ export class AboutFormsComponent implements OnInit, OnDestroy {
   profileForm!: FormGroup;
   routeId!: string;
   randomAvatar!: string;
-  user!: User | unknown;
+  @Input() user?: User;
+  @Input() isAboutFormOpen!: boolean;
 
   private destroyed = new Subject();
 
@@ -64,28 +65,11 @@ export class AboutFormsComponent implements OnInit, OnDestroy {
   ) {
     this.routeId = this.route.snapshot.paramMap.get('id')!;
     this.randomAvatar = randomAvatar();
-    // this.user = this.location.getState();
   }
 
   ngOnInit(): void {
     this.profileFormInit();
-    this.findOne();
-
-  }
-
-  findOne(): void {
-    this.userService
-      .findUser()
-      .subscribe({
-        next: (response) => {
-          this.user = response;
-          this.prepopulateProfileForm(this.user)
-        },
-        error: (error: HttpErrorResponse) => {
-
-        },
-        complete: () => { },
-      });
+    this.prepopulateProfileForm(this.user)
   }
 
   profileFormInit(): void {
@@ -109,13 +93,15 @@ export class AboutFormsComponent implements OnInit, OnDestroy {
   }
 
   prepopulateProfileForm(user: any) {
-    this.profileForm.patchValue({
-      name: user.name,
-      email: user.email,
-      summary: user.summary,
-      birthday: new Date(user.birthday),
-      phone: user.phone,
-    });
+    if (user) {
+      this.profileForm.patchValue({
+        name: user.name,
+        email: user.email,
+        summary: user.summary,
+        birthday: new Date(user.birthday),
+        phone: user.phone,
+      });
+    }
   }
 
   onBirthdaySelected(selectedDate: string) {
@@ -143,9 +129,19 @@ export class AboutFormsComponent implements OnInit, OnDestroy {
           this.toastService.showError('Error!', error.message);
         },
         complete: () => {
-          this.goBack();
+          this.navigateAfterSucceed();
         },
       });
+  }
+
+  navigateAfterSucceed(): void {
+    timer(1000)
+      .pipe(take(1))
+      .subscribe(() =>
+        this.router
+          .navigateByUrl('/profile')
+          .then(() => window.location.reload())
+      );
   }
 
   goBack(): void {

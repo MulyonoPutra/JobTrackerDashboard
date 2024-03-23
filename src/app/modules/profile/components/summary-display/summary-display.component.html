@@ -1,0 +1,64 @@
+@if(isProfile) {
+<div class="grid md:grid-cols-2 text-sm">
+  <div class="grid grid-cols-2">
+    <div class="px-4 py-2 font-semibold">Full Name</div>
+    <div class="px-4 py-2">{{ user.name }} </div>
+  </div>
+  <div class="grid grid-cols-2">
+    <div class="px-4 py-2 font-semibold">Email.</div>
+    <div class="px-4 py-2">
+      <a class="text-primary-500 font-semibold" href="mailto:{{user.email }}">{{user.email }}</a>
+    </div>
+  </div>
+  <div class="grid grid-cols-2">
+    <div class="px-4 py-2 font-semibold">Gender</div>
+    <div class="px-4 py-2">Female</div>
+  </div>
+  <div class="grid grid-cols-2">
+    <div class="px-4 py-2 font-semibold">Contact No.</div>
+    <div class="px-4 py-2">{{ user.phone }}</div>
+  </div>
+  <div class="grid grid-cols-2">
+    <div class="px-4 py-2 font-semibold">Address</div>
+    <div class="px-4 py-2 text-xs">{{user.address.streetAddress }},
+      {{user.address.subDistrict }},
+      {{user.address.district }}, {{user.address.province }}</div>
+  </div>
+  <div class="grid grid-cols-2">
+    <div class="px-4 py-2 font-semibold">Birthday</div>
+    <div class="px-4 py-2">{{ user.birthday | date:'mediumDate' }}</div>
+  </div>
+</div>
+} @else if(isEducation && education) {
+<ng-container>
+  <div class="flex flex-col space-y-1">
+    <div>
+      <span class="text-primary-600 mr-2 text-sm font-semibold">{{ education.institution }}</span>
+    </div>
+    <div>
+      <span class="text-gray-700 text-xs font-semibold">{{ education.startDate
+            }} - {{ education.endDate }}</span>
+    </div>
+    <div>
+      <p class="mt-2 text-gray-700 text-sm">
+        {{ education.description }}
+      </p>
+    </div>
+  </div>
+
+</ng-container>
+} @else if(isExperience && experience) {
+<ng-container>
+  <div class="flex flex-col space-y-1">
+    <div>
+      <span class="text-primary-600 mr-2 text-sm font-semibold">at {{ experience.company }}</span>
+    </div>
+    <div>
+      <span class="text-gray-700 text-xs font-semibold">{{ experience.startDate }} - {{ experience.endDate }}</span>
+    </div>
+  </div>
+  <p class="mt-2 text-gray-700 text-sm">
+    {{ experience.responsibilities }}
+  </p>
+</ng-container>
+}
