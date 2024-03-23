@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil, timer } from 'rxjs';
 
 import { AboutFormsComponent } from '../../components/about-forms/about-forms.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
@@ -96,6 +96,10 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
     this.toastService.showError('Error!', error.message);
   }
 
+  private successMessage(message: string) {
+    this.toastService.showSuccess('Success!', message);
+  }
+
   ngOnDestroy(): void {
     this.destroyed.next(true);
     this.destroyed.complete();
@@ -103,7 +107,9 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
 
   onUpdate(): void {
     this.sidebarVisible = !this.sidebarVisible;
-    this.isProfile = !this.isProfile;
+    if (this.sidebarVisible) {
+      this.isProfile = !this.isProfile;
+    }
   }
 
   onCreate(): void {
@@ -120,8 +126,50 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
     this.isExperience = !this.isExperience;
   }
 
-  onRemove(): void {
-    alert('Remove');
+  onRemoveExperience(id: string): void {
+    this.userService.removeExperience(id)
+      .pipe(takeUntil(this.destroyed))
+      .subscribe({
+        next: (response) => {
+          this.successMessage(response)
+        },
+        error: (error: HttpErrorResponse) => {
+          this.errorMessage(error);
+        },
+        complete: () => {
+          this.reload();
+        },
+      });
+  }
+
+  onRemoveEducation(id: string): void {
+    this.userService.removeEducation(id)
+      .pipe(takeUntil(this.destroyed))
+      .subscribe({
+        next: (response) => {
+          this.successMessage(response)
+        },
+        error: (error: HttpErrorResponse) => {
+          this.errorMessage(error);
+        },
+        complete: () => {
+          this.reload();
+        },
+      });
+  }
+
+  reload(): void {
+    timer(1000)
+      .pipe(take(1))
+      .subscribe(() =>
+        window.location.reload()
+      );
+  }
+
+  close(): void {
+    this.isProfile = false;
+    this.isExperience = false;
+    this.isEducation = false;
   }
 
 }

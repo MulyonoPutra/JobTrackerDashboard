@@ -1,6 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, catchError, map } from 'rxjs';
 
+import { Education } from '../models/education';
+import { Experience } from '../models/experience';
 import { HttpResponseEntity } from '../models/http-response-entity';
 import { Injectable } from '@angular/core';
 import { UpdateAddressDto } from '../models/dto/update-address.dto';
@@ -70,6 +72,20 @@ export class UserService {
   updateExperience(experienceId: string, body: UpdateExperienceDto): Observable<UpdateExperienceDto> {
     return this.http.patch<HttpResponseEntity<UpdateExperienceDto>>(`${this.env}/profile/address/${experienceId}`, body).pipe(
       map((response) => response.data),
+      catchError((error: HttpErrorResponse) => handlerHttpError(error))
+    );
+  }
+
+  removeExperience(id: string): Observable<string> {
+    return this.http.delete<HttpResponseEntity<Experience>>(`${this.env}/profile/experience/${id}`).pipe(
+      map((response) => response.message),
+      catchError((error: HttpErrorResponse) => handlerHttpError(error))
+    );
+  }
+
+  removeEducation(id: string): Observable<string> {
+    return this.http.delete<HttpResponseEntity<Education>>(`${this.env}/profile/education/${id}`).pipe(
+      map((response) => response.message),
       catchError((error: HttpErrorResponse) => handlerHttpError(error))
     );
   }

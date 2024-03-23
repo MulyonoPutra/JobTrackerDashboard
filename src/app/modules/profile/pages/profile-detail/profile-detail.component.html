@@ -19,21 +19,27 @@
 
       <div class="w-full md:w-9/12 mx-2 h-64">
         <app-title-gradient [title]="'About'" [size]="'text-2xl'" />
-        <app-fieldset-wrapper [title]="'About'" (updateEvent)="onUpdate()" (deleteEvent)="onRemove()">
+        <app-fieldset-wrapper [title]="'About'" (updateEvent)="onUpdate()">
           <app-summary-display [user]="user" [isProfile]="true" />
         </app-fieldset-wrapper>
 
         <app-title-gradient [title]="'Education'" [size]="'text-2xl'" />
-         @for (item of education; track $index) {
-           <app-fieldset-wrapper [title]="item.title" (updateEvent)="onUpdateEducation()" (deleteEvent)="onRemove()">
+         @for (item of education; track item.id) {
+           <app-fieldset-wrapper
+              [title]="item.title"
+              (updateEvent)="onUpdateEducation()"
+              (deleteEvent)="onRemoveEducation(item.id)">
                <app-summary-display [education]="item" [isEducation]="true" />
            </app-fieldset-wrapper>
          }
         <div class="my-4"></div>
 
         <app-title-gradient [title]="'Experience'" [size]="'text-2xl'" />
-         @for (item of experience; track $index) {
-           <app-fieldset-wrapper [title]="item.position" (updateEvent)="onUpdateExperience()" (deleteEvent)="onRemove()">
+         @for (item of experience; track item.id) {
+           <app-fieldset-wrapper
+              [title]="item.position"
+              (updateEvent)="onUpdateExperience()"
+              (deleteEvent)="onRemoveExperience(item.id)">
                <app-summary-display [experience]="item" [isExperience]="true" />
            </app-fieldset-wrapper>
          }
@@ -43,7 +49,7 @@
   </div>
 </div>
 
-<p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="w-[30rem]">
+<p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="w-[30rem]" (onHide)="close()">
   @if (isProfile) {
     <app-about-forms [isAboutFormOpen]="isProfile" [user]="user"></app-about-forms>
   } @else if (isExperience) {
