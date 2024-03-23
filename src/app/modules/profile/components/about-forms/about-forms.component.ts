@@ -19,7 +19,6 @@ import { ToastService } from 'src/app/core/services/toast.service';
 import { UpdateUserDto } from 'src/app/core/models/dto/update-user.dto';
 import { User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/user.service';
-import { ValidationService } from 'src/app/core/services/validation.service';
 import { randomAvatar } from 'src/app/core/utils/random-avatar';
 
 @Component({
@@ -50,7 +49,7 @@ export class AboutFormsComponent implements OnInit, OnDestroy {
   routeId!: string;
   randomAvatar!: string;
   @Input() user?: User;
-  @Input() isAboutFormOpen!: boolean;
+  @Input() isFormOpen!: boolean;
 
   private destroyed = new Subject();
 
@@ -58,7 +57,6 @@ export class AboutFormsComponent implements OnInit, OnDestroy {
     private readonly fb: FormBuilder,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private readonly validations: ValidationService,
     private readonly location: Location,
     private readonly toastService: ToastService,
     private readonly userService: UserService

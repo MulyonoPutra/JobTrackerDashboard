@@ -7,7 +7,7 @@
           <div class="flex flex-col items-center">
             <img [src]="randomAvatar" class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0" />
             <h1 class="text-xl font-bold">{{ user.name }} </h1>
-            <p class="text-gray-700">{{ user.experience[0].position }}</p>
+            <p class="text-gray-700">{{ user.email }}</p>
             <div class="mt-6 flex flex-wrap gap-4 justify-center">
               <app-button [label]="'Update'" (clicked)="sidebarVisible = true" />
             </div>
@@ -24,36 +24,44 @@
         </app-fieldset-wrapper>
 
         <app-title-gradient [title]="'Education'" [size]="'text-2xl'" />
-         @for (item of education; track item.id) {
-           <app-fieldset-wrapper
-              [title]="item.title"
-              (updateEvent)="onUpdateEducation()"
-              (deleteEvent)="onRemoveEducation(item.id)">
-               <app-summary-display [education]="item" [isEducation]="true" />
-           </app-fieldset-wrapper>
-         }
+        @for (item of education; track item.id) {
+        <app-fieldset-wrapper [title]="item.title" (updateEvent)="onUpdateEducation()"
+          (deleteEvent)="onRemoveEducation(item.id)">
+          <app-summary-display [education]="item" [isEducation]="true" />
+        </app-fieldset-wrapper>
+        }
         <div class="my-4"></div>
 
-        <app-title-gradient [title]="'Experience'" [size]="'text-2xl'" />
-         @for (item of experience; track item.id) {
-           <app-fieldset-wrapper
-              [title]="item.position"
-              (updateEvent)="onUpdateExperience()"
-              (deleteEvent)="onRemoveExperience(item.id)">
-               <app-summary-display [experience]="item" [isExperience]="true" />
-           </app-fieldset-wrapper>
-         }
+        @if(user.experience.length === 0){
+          <button (click)="onCreateExperience()" [pTooltip]="tooltipContent" tooltipPosition="bottom">
+            <app-title-gradient [title]="'Add New Experience'" [size]="'text-2xl'" />
+          </button>
+          <ng-template #tooltipContent>
+            <div class="flex align-items-center">
+              <span> Click here.. </span>
+            </div>
+          </ng-template>
+        } @else {
+          <app-title-gradient [title]="'Experience'" [size]="'text-2xl'" />
+        }
+        @for (item of experience; track item.id) {
+        <app-fieldset-wrapper [title]="item.position" (createEvent)="onCreateExperience()"
+          (updateEvent)="onUpdateExperience()" (deleteEvent)="onRemoveExperience(item.id)">
+          <app-summary-display [experience]="item" [isExperience]="true" />
+        </app-fieldset-wrapper>
+        }
         <div class="p-4"></div>
       </div>
     </div>
   </div>
 </div>
 
-<p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="w-[30rem]" (onHide)="close()">
+<p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="w-[30rem]" (onHide)="close()"
+  [dismissible]="false">
   @if (isProfile) {
-    <app-about-forms [isAboutFormOpen]="isProfile" [user]="user"></app-about-forms>
+  <app-about-forms [isFormOpen]="isProfile" [user]="user"></app-about-forms>
   } @else if (isExperience) {
-    <app-experience-forms [isAboutFormOpen]="isProfile"></app-experience-forms>
+  <app-experience-forms [isUpdate]="isUpdate"></app-experience-forms>
   }
 </p-sidebar>
 

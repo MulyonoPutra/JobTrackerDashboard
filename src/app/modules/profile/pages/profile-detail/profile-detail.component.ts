@@ -17,6 +17,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { SummaryDisplayComponent } from '../../components/summary-display/summary-display.component';
 import { TitleGradientComponent } from 'src/app/shared/components/title-gradient/title-gradient.component';
 import { ToastService } from 'src/app/core/services/toast.service';
+import { TooltipModule } from 'primeng/tooltip';
 import { User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/user.service';
 import { randomAvatar } from 'src/app/core/utils/random-avatar';
@@ -26,6 +27,7 @@ import { randomAvatar } from 'src/app/core/utils/random-avatar';
   standalone: true,
   imports: [
     CommonModule,
+    TooltipModule,
     AngularSvgIconModule,
     ReadMoreComponent,
     CardWrapperComponent,
@@ -55,6 +57,8 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
   education!: Education[];
   experience!: Experience[];
   randomAvatar!: string;
+
+  isUpdate = false;
 
   constructor(
     private readonly userService: UserService,
@@ -92,19 +96,6 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(`/profile/update/${this.user.id}`, { state: this.user });
   }
 
-  private errorMessage(error: HttpErrorResponse) {
-    this.toastService.showError('Error!', error.message);
-  }
-
-  private successMessage(message: string) {
-    this.toastService.showSuccess('Success!', message);
-  }
-
-  ngOnDestroy(): void {
-    this.destroyed.next(true);
-    this.destroyed.complete();
-  }
-
   onUpdate(): void {
     this.sidebarVisible = !this.sidebarVisible;
     if (this.sidebarVisible) {
@@ -116,15 +107,24 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
 
   }
 
-  onUpdateEducation(): void {
+  onCreateExperience(): void {
     this.sidebarVisible = !this.sidebarVisible;
-    this.isEducation = !this.isEducation;
+    this.isExperience = !this.isExperience;
+    this.isUpdate = !this.isUpdate;
   }
 
   onUpdateExperience(): void {
     this.sidebarVisible = !this.sidebarVisible;
     this.isExperience = !this.isExperience;
+    this.isUpdate = false;
   }
+
+  onUpdateEducation(): void {
+    this.sidebarVisible = !this.sidebarVisible;
+    this.isEducation = !this.isEducation;
+    this.isUpdate = !this.isUpdate;
+  }
+
 
   onRemoveExperience(id: string): void {
     this.userService.removeExperience(id)
@@ -137,7 +137,8 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
           this.errorMessage(error);
         },
         complete: () => {
-          this.reload();
+          this.isUpdate = true;
+          this.onReload();
         },
       });
   }
@@ -153,12 +154,12 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
           this.errorMessage(error);
         },
         complete: () => {
-          this.reload();
+          this.onReload();
         },
       });
   }
 
-  reload(): void {
+  onReload(): void {
     timer(1000)
       .pipe(take(1))
       .subscribe(() =>
@@ -170,6 +171,19 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
     this.isProfile = false;
     this.isExperience = false;
     this.isEducation = false;
+  }
+
+  private errorMessage(error: HttpErrorResponse) {
+    this.toastService.showError('Error!', error.message);
+  }
+
+  private successMessage(message: string) {
+    this.toastService.showSuccess('Success!', message);
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed.next(true);
+    this.destroyed.complete();
   }
 
 }

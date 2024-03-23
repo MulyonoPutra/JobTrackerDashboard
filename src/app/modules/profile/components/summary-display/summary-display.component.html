@@ -54,11 +54,10 @@
       <span class="text-primary-600 mr-2 text-sm font-semibold">at {{ experience.company }}</span>
     </div>
     <div>
-      <span class="text-gray-700 text-xs font-semibold">{{ experience.startDate }} - {{ experience.endDate }}</span>
+      <span class="text-gray-700 text-xs font-semibold">
+        {{ experience.startDate | date:'longDate' }} - {{ experience.endDate | date:'longDate' }}</span>
     </div>
   </div>
-  <p class="mt-2 text-gray-700 text-sm">
-    {{ experience.responsibilities }}
-  </p>
+  <div class="mt-2 text-gray-700 text-sm" [innerHTML]="experience.responsibilities"></div>
 </ng-container>
 }

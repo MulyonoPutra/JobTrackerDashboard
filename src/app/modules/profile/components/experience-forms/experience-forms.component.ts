@@ -1,14 +1,19 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Subject, take, takeUntil, timer } from 'rxjs';
 
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
+import { CalendarComponent } from 'src/app/shared/components/calendar/calendar.component';
+import { CalendarModule } from 'primeng/calendar';
+import { CreateExperienceDto } from 'src/app/core/dto/create-experience.dto';
+import { EditorModule } from 'primeng/editor';
 import { FormFieldComponent } from 'src/app/shared/components/form-field/form-field.component';
 import { FormTextareaComponent } from 'src/app/shared/components/form-textarea/form-textarea.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Subject } from 'rxjs';
 import { ToastService } from 'src/app/core/services/toast.service';
+import { User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
@@ -22,21 +27,26 @@ import { UserService } from 'src/app/core/services/user.service';
     FormsModule,
     ReactiveFormsModule,
     FormTextareaComponent,
+    CalendarModule,
+    CalendarComponent,
+    EditorModule
+
   ],
   templateUrl: './experience-forms.component.html',
   styleUrls: ['./experience-forms.component.scss'],
   providers: [UserService],
 })
 export class ExperienceFormsComponent implements OnInit, OnDestroy {
-  experienceForm!: FormGroup;
+  form!: FormGroup;
   routeId!: string;
   randomAvatar!: string;
-  user!: any;
   isDisabled = false;
 
   private destroyed = new Subject();
 
-  @Input() isAboutFormOpen!: boolean;
+  @Input() isUpdate = false;
+
+  responsibilitiesValue = 'Add your responsibility here..';
 
   constructor(
     private readonly fb: FormBuilder,
@@ -44,59 +54,121 @@ export class ExperienceFormsComponent implements OnInit, OnDestroy {
     private readonly toastService: ToastService,
     private readonly userService: UserService
   ) {
+
   }
 
   ngOnInit(): void {
-    this.findOne();
+    if (this.isUpdate) {
+      this.formInitialized();
+    } else {
+      this.findOne(!this.isUpdate);
+    }
   }
 
-  findOne(): void {
+  formInitialized(): void {
+    this.form = this.fb.group({
+      experience: this.fb.array([
+        this.experienceFormGroup()
+      ])
+    });
+  }
+
+  findOne(populateForm: boolean): void {
     this.userService
       .findUser()
       .subscribe({
-        next: (user) => {
-          this.experienceForm = this.fb.group({
+        next: (user: User) => {
+          this.form = this.fb.group({
             experience: this.fb.array(
-              user.experience.map((x: any) =>
-                this.initFormGroup(x)
-              )
+              populateForm ?
+                user.experience.map((x: any) =>
+                  this.prepopulateForms(x)
+                ) : user.experience.map((x: any) => this.experienceFormGroup()
+                )
             )
           });
+
+          if (!populateForm) {
+            this.form.reset();
+          }
         },
         error: (error: HttpErrorResponse) => { },
         complete: () => { },
       });
   }
 
-  private initFormGroup(data: any) {
+  private prepopulateForms(data: CreateExperienceDto) {
     return this.fb.group({
-      location: this.fb.control({ value: data.location, disabled: false }),
-      position: this.fb.control({ value: data.position, disabled: false }),
+      startDate: [{ value: this.convertDate(data.startDate), disabled: false }],
+      endDate: [{ value: this.convertDate(data.endDate), disabled: false }],
+      position: [{ value: data.position, disabled: false }],
+      location: [{ value: data.location, disabled: false }],
+      company: [{ value: data.company, disabled: false }],
+      responsibilities: [{ value: data.responsibilities, disabled: false }],
     });
   }
 
-  createExperienceField(): FormGroup {
+  private convertDate(date: string): Date {
+    return new Date(date);
+  }
+
+  experienceFormGroup(): FormGroup {
     return this.fb.group({
-      location: '',
-      position: '',
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+      position: ['', Validators.required],
+      location: ['', Validators.required],
+      company: ['', Validators.required],
+      responsibilities: ['', Validators.required],
     });
   }
 
   onSubmit(): void {
-    if (this.experienceForm.valid) {
-      // this.onUpdate();
+    if (this.form.valid) {
+      this.submitFormToServer();
+      console.log(this.form.value.experience);
     }
   }
 
-  get experienceFormArray() {
-    return this.experienceForm.get('experience') as FormArray;
+  get experienceFormArray(): FormArray {
+    return this.form.get('experience')! as FormArray;
+  }
+
+  get experienceFormValue(): CreateExperienceDto[] {
+    return this.form.value.experience;
   }
 
   experienceFormGroupIndex(index: number): FormGroup {
-    return (this.experienceForm.get('experience') as FormArray).at(index) as FormGroup;
+    const experiences = this.form.get('experience') as FormArray;
+    return experiences.at(index) as FormGroup;
   }
 
-  addNewForms(): void { }
+  addNewForms(): void {
+    const formArray = this.form.get('experience') as FormArray;
+    formArray.push(this.experienceFormGroup());
+  }
+
+  removeForms(i: number): void {
+    const formArray = this.form.get('experience') as FormArray;
+    formArray.removeAt(i);
+  }
+
+  submitFormToServer(): void {
+    this.userService
+      .newExperience(this.experienceFormValue)
+      .pipe(takeUntil(this.destroyed))
+      .subscribe({
+        next: (response) => {
+          this.successMessage(response)
+        },
+        error: (error: HttpErrorResponse) => {
+          this.errorMessage(error);
+        },
+        complete: () => {
+          this.onReload();
+        },
+      });
+  }
 
   // onUpdate(): void {
   //   this.userService
@@ -114,6 +186,22 @@ export class ExperienceFormsComponent implements OnInit, OnDestroy {
   //       },
   //     });
   // }
+
+  onReload(): void {
+    timer(1000)
+      .pipe(take(1))
+      .subscribe(() =>
+        window.location.reload()
+      );
+  }
+
+  private errorMessage(error: HttpErrorResponse) {
+    this.toastService.showError('Error!', error.message);
+  }
+
+  private successMessage(message: string) {
+    this.toastService.showSuccess('Success!', message);
+  }
 
   goBack(): void {
     this.location.back();

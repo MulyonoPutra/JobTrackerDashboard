@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Observable, catchError, map } from 'rxjs';
 
+import { CreateExperienceDto } from '../dto/create-experience.dto';
 import { Education } from '../models/education';
 import { Experience } from '../models/experience';
 import { HttpResponseEntity } from '../models/http-response-entity';
@@ -62,9 +63,9 @@ export class UserService {
     );
   }
 
-  newExperience(body: UpdateExperienceDto): Observable<UpdateExperienceDto> {
-    return this.http.post<HttpResponseEntity<UpdateExperienceDto>>(`${this.env}/profile/experience`, body).pipe(
-      map((response) => response.data),
+  newExperience(body: CreateExperienceDto[]): Observable<string> {
+    return this.http.post<any>(`${this.env}/profile/experience`, body).pipe(
+      map((response) => response.message),
       catchError((error: HttpErrorResponse) => handlerHttpError(error))
     );
   }
