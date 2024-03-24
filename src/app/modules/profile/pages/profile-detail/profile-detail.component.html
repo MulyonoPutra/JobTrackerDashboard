@@ -46,7 +46,7 @@
         }
         @for (item of experience; track item.id) {
         <app-fieldset-wrapper [title]="item.position" (createEvent)="onCreateExperience()"
-          (updateEvent)="onUpdateExperience()" (deleteEvent)="onRemoveExperience(item.id)">
+          (updateEvent)="onUpdateExperience(item.id)" (deleteEvent)="onRemoveExperience(item.id)">
           <app-summary-display [experience]="item" [isExperience]="true" />
         </app-fieldset-wrapper>
         }
@@ -61,7 +61,7 @@
   @if (isProfile) {
   <app-about-forms [isFormOpen]="isProfile" [user]="user"></app-about-forms>
   } @else if (isExperience) {
-  <app-experience-forms [isUpdate]="isUpdate"></app-experience-forms>
+  <app-experience-forms [isUpdate]="isUpdate" [experienceId]="experienceId"></app-experience-forms>
   }
 </p-sidebar>
 

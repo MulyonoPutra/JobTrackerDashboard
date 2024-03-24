@@ -57,8 +57,15 @@ export class UserService {
   }
 
   updateEducation(educationId: string, body: UpdateEducationDto): Observable<UpdateEducationDto> {
-    return this.http.patch<HttpResponseEntity<UpdateEducationDto>>(`${this.env}/profile/address/${educationId}`, body).pipe(
+    return this.http.patch<HttpResponseEntity<UpdateEducationDto>>(`${this.env}/profile/education/${educationId}`, body).pipe(
       map((response) => response.data),
+      catchError((error: HttpErrorResponse) => handlerHttpError(error))
+    );
+  }
+
+  removeEducation(id: string): Observable<string> {
+    return this.http.delete<HttpResponseEntity<Education>>(`${this.env}/profile/education/${id}`).pipe(
+      map((response) => response.message),
       catchError((error: HttpErrorResponse) => handlerHttpError(error))
     );
   }
@@ -70,9 +77,9 @@ export class UserService {
     );
   }
 
-  updateExperience(experienceId: string, body: UpdateExperienceDto): Observable<UpdateExperienceDto> {
-    return this.http.patch<HttpResponseEntity<UpdateExperienceDto>>(`${this.env}/profile/address/${experienceId}`, body).pipe(
-      map((response) => response.data),
+  updateExperience(experienceId: string, body: UpdateExperienceDto): Observable<string> {
+    return this.http.patch<HttpResponseEntity<UpdateExperienceDto>>(`${this.env}/profile/experience/${experienceId}`, body).pipe(
+      map((response) => response.message),
       catchError((error: HttpErrorResponse) => handlerHttpError(error))
     );
   }
@@ -84,10 +91,5 @@ export class UserService {
     );
   }
 
-  removeEducation(id: string): Observable<string> {
-    return this.http.delete<HttpResponseEntity<Education>>(`${this.env}/profile/education/${id}`).pipe(
-      map((response) => response.message),
-      catchError((error: HttpErrorResponse) => handlerHttpError(error))
-    );
-  }
+
 }

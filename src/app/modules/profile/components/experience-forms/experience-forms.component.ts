@@ -9,10 +9,12 @@ import { CalendarComponent } from 'src/app/shared/components/calendar/calendar.c
 import { CalendarModule } from 'primeng/calendar';
 import { CreateExperienceDto } from 'src/app/core/dto/create-experience.dto';
 import { EditorModule } from 'primeng/editor';
+import { Experience } from 'src/app/core/models/experience';
 import { FormFieldComponent } from 'src/app/shared/components/form-field/form-field.component';
 import { FormTextareaComponent } from 'src/app/shared/components/form-textarea/form-textarea.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ToastService } from 'src/app/core/services/toast.service';
+import { UpdateExperienceDto } from 'src/app/core/models/dto/update-experience.dto';
 import { User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/user.service';
 
@@ -45,6 +47,7 @@ export class ExperienceFormsComponent implements OnInit, OnDestroy {
   private destroyed = new Subject();
 
   @Input() isUpdate = false;
+  @Input() experienceId!: string;
 
   responsibilitiesValue = 'Add your responsibility here..';
 
@@ -81,9 +84,11 @@ export class ExperienceFormsComponent implements OnInit, OnDestroy {
           this.form = this.fb.group({
             experience: this.fb.array(
               populateForm ?
-                user.experience.map((x: any) =>
+                user.experience.map((x: Experience) =>
                   this.prepopulateForms(x)
-                ) : user.experience.map((x: any) => this.experienceFormGroup()
+                ) : user.experience.map(() => {
+                  return this.experienceFormGroup()
+                }
                 )
             )
           });
@@ -92,8 +97,11 @@ export class ExperienceFormsComponent implements OnInit, OnDestroy {
             this.form.reset();
           }
         },
-        error: (error: HttpErrorResponse) => { },
-        complete: () => { },
+        error: (error: HttpErrorResponse) => {
+          this.errorMessage(error);
+        },
+        complete: () => {
+        },
       });
   }
 
@@ -123,20 +131,18 @@ export class ExperienceFormsComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSubmit(): void {
-    if (this.form.valid) {
-      this.submitFormToServer();
-      console.log(this.form.value.experience);
-    }
-  }
-
   get experienceFormArray(): FormArray {
     return this.form.get('experience')! as FormArray;
   }
 
-  get experienceFormValue(): CreateExperienceDto[] {
+  get experienceFormArrayValue(): CreateExperienceDto[] {
     return this.form.value.experience;
   }
+
+  get experienceFormGroupValue(): UpdateExperienceDto {
+    return this.form.value.experience.find((exp: UpdateExperienceDto) => exp);
+  }
+
 
   experienceFormGroupIndex(index: number): FormGroup {
     const experiences = this.form.get('experience') as FormArray;
@@ -155,7 +161,7 @@ export class ExperienceFormsComponent implements OnInit, OnDestroy {
 
   submitFormToServer(): void {
     this.userService
-      .newExperience(this.experienceFormValue)
+      .newExperience(this.experienceFormArrayValue)
       .pipe(takeUntil(this.destroyed))
       .subscribe({
         next: (response) => {
@@ -170,22 +176,32 @@ export class ExperienceFormsComponent implements OnInit, OnDestroy {
       });
   }
 
-  // onUpdate(): void {
-  //   this.userService
-  //     .updateProfile(this.experienceFormCtrlValue)
-  //     .pipe(takeUntil(this.destroyed))
-  //     .subscribe({
-  //       next: () => {
-  //         this.toastService.showSuccess('Success!', 'Successfully updated!');
-  //       },
-  //       error: (error: HttpErrorResponse) => {
-  //         this.toastService.showError('Error!', error.message);
-  //       },
-  //       complete: () => {
-  //         this.goBack();
-  //       },
-  //     });
-  // }
+  onSubmit(): void {
+    if (this.form.valid) {
+      if(this.experienceId){
+        this.updateFormToServer();
+      } else {
+        this.submitFormToServer();
+      }
+    }
+  }
+
+  updateFormToServer(): void {
+    this.userService
+      .updateExperience(this.experienceId, this.experienceFormGroupValue)
+      .pipe(takeUntil(this.destroyed))
+      .subscribe({
+        next: (response) => {
+          this.successMessage(response)
+        },
+        error: (error: HttpErrorResponse) => {
+          this.errorMessage(error);
+        },
+        complete: () => {
+          this.onReload();
+        },
+      });
+  }
 
   onReload(): void {
     timer(1000)

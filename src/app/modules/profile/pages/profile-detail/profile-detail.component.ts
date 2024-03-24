@@ -52,13 +52,15 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
   isEducation = false;
   isExperience = false;
   isProfile = false;
+  isUpdate = false;
 
   user!: User;
   education!: Education[];
   experience!: Experience[];
-  randomAvatar!: string;
 
-  isUpdate = false;
+  randomAvatar!: string;
+  experienceId!: string;
+
 
   constructor(
     private readonly userService: UserService,
@@ -113,10 +115,12 @@ export class ProfileDetailComponent implements OnInit, OnDestroy {
     this.isUpdate = !this.isUpdate;
   }
 
-  onUpdateExperience(): void {
+  onUpdateExperience(id: string): void {
     this.sidebarVisible = !this.sidebarVisible;
     this.isExperience = !this.isExperience;
     this.isUpdate = false;
+    this.experienceId = id;
+    console.log(id);
   }
 
   onUpdateEducation(): void {
