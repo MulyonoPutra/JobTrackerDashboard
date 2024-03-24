@@ -9,21 +9,19 @@ import { TitleWithIconComponent } from 'src/app/shared/components/title-with-ico
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
-  selector: 'app-profile-forms',
-  standalone: true,
-  imports: [
-    CommonModule,
-    AngularSvgIconModule,
-    FormsModule,
-    ReactiveFormsModule,
-    TitleWithIconComponent,
-    AboutFormsComponent,
-    ExperienceFormsComponent
-  ],
-  templateUrl: './profile-forms.component.html',
-  styleUrls: ['./profile-forms.component.scss'],
-  providers: [UserService],
+	selector: 'app-profile-forms',
+	standalone: true,
+	imports: [
+		CommonModule,
+		AngularSvgIconModule,
+		FormsModule,
+		ReactiveFormsModule,
+		TitleWithIconComponent,
+		AboutFormsComponent,
+		ExperienceFormsComponent,
+	],
+	templateUrl: './profile-forms.component.html',
+	styleUrls: ['./profile-forms.component.scss'],
+	providers: [UserService],
 })
-export class ProfileFormsComponent {
-
-}
+export class ProfileFormsComponent {}

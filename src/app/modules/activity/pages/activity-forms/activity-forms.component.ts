@@ -34,7 +34,7 @@ import { ValidationService } from 'src/app/core/services/validation.service';
 		ButtonComponent,
 		FormSelectComponent,
 		DatepickerComponent,
-    CardWrapperComponent
+		CardWrapperComponent,
 	],
 	templateUrl: './activity-forms.component.html',
 	styleUrls: ['./activity-forms.component.scss'],
@@ -85,7 +85,7 @@ export class ActivityFormsComponent implements OnInit, AfterViewInit, OnDestroy 
 			status: ['', Validators.required],
 			appliedOn: ['', Validators.required],
 			jobPosted: ['', Validators.required],
-      platform: ['', Validators.required],
+			platform: ['', Validators.required],
 			categoryId: ['', Validators.required],
 		});
 	}

@@ -32,8 +32,8 @@ import { ToastService } from 'src/app/core/services/toast.service';
 		PaginationComponent,
 		NgxPaginationModule,
 		ButtonComponent,
-    CardWrapperComponent,
-    EmptyRecordMessageComponent
+		CardWrapperComponent,
+		EmptyRecordMessageComponent,
 	],
 	templateUrl: './category-collections.component.html',
 	styleUrls: ['./category-collections.component.scss'],

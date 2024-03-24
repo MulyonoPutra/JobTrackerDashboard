@@ -13,16 +13,15 @@ import { randomAvatar } from 'src/app/core/utils/random-avatar';
 	standalone: true,
 	imports: [ClickOutsideDirective, NgClass, RouterLink],
 })
-export class ProfileMenuComponent  {
-
+export class ProfileMenuComponent {
 	@Input() user!: User;
 
 	public isMenuOpen = false;
-  randomAvatar!: string;
+	randomAvatar!: string;
 
 	constructor() {
-    this.randomAvatar = randomAvatar();
-  }
+		this.randomAvatar = randomAvatar();
+	}
 
 	public toggleMenu(): void {
 		this.isMenuOpen = !this.isMenuOpen;

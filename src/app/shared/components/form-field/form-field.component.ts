@@ -8,7 +8,7 @@ import { ValidationService } from 'src/app/core/services/validation.service';
 @Component({
 	selector: 'app-form-field',
 	standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, FloatLabelModule],
+	imports: [CommonModule, FormsModule, ReactiveFormsModule, FloatLabelModule],
 	templateUrl: './form-field.component.html',
 	styleUrls: ['./form-field.component.scss'],
 	providers: [ValidationService],
@@ -31,15 +31,15 @@ export class FormFieldComponent {
 		return this.validation.getErrorMessage(control);
 	}
 
-  get classLabel() {
-    return {
-      'label-valid': !this.isInvalid,
-      'label-invalid': this.isInvalid,
-    };
-  }
+	get classLabel() {
+		return {
+			'label-valid': !this.isInvalid,
+			'label-invalid': this.isInvalid,
+		};
+	}
 
-   get classFilled(): { [key: string]: boolean } {
-    const isFilled = this.formGroup.get(this.fieldName)?.value !== '';
-    return { 'p-filled': isFilled };
-  }
+	get classFilled(): { [key: string]: boolean } {
+		const isFilled = this.formGroup.get(this.fieldName)?.value !== '';
+		return { 'p-filled': isFilled };
+	}
 }

@@ -6,20 +6,20 @@ import { ProfileDetailComponent } from './pages/profile-detail/profile-detail.co
 import { ProfileFormsComponent } from './pages/profile-forms/profile-forms.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: ProfileComponent,
-    children: [
-      { path: '', redirectTo: 'forms', pathMatch: 'full' },
-      { path: 'update/:id', component: ProfileFormsComponent },
-      { path: '', component: ProfileDetailComponent },
-      { path: '**', redirectTo: 'error/404' },
-    ],
-  },
+	{
+		path: '',
+		component: ProfileComponent,
+		children: [
+			{ path: '', redirectTo: 'forms', pathMatch: 'full' },
+			{ path: 'update/:id', component: ProfileFormsComponent },
+			{ path: '', component: ProfileDetailComponent },
+			{ path: '**', redirectTo: 'error/404' },
+		],
+	},
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+	imports: [RouterModule.forChild(routes)],
+	exports: [RouterModule],
 })
-export class ProfileRoutingModule { }
+export class ProfileRoutingModule {}

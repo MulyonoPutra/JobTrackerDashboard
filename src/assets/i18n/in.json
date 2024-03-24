@@ -1,9 +1,9 @@
 {
-  "app": {
-    "title": {
-      "list": "List",
-      "new": "Baru",
-      "update": "Rubah"
-    }
-  }
+	"app": {
+		"title": {
+			"list": "List",
+			"new": "Baru",
+			"update": "Rubah"
+		}
+	}
 }

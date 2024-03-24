@@ -13,7 +13,7 @@ const routes: Routes = [
 		children: [
 			{ path: '', redirectTo: 'forms', pathMatch: 'full' },
 			{ path: 'forms', component: ActivityFormsComponent },
-      { path: 'update/:id', component: ActivityFormsComponent, canDeactivate: [FormGuard] },
+			{ path: 'update/:id', component: ActivityFormsComponent, canDeactivate: [FormGuard] },
 			{ path: 'collections', component: ActivityCollectionsComponent },
 			{ path: '**', redirectTo: 'error/404' },
 		],

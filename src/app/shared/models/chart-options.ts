@@ -38,5 +38,5 @@ export type ChartOptions = {
 	responsive: ApexResponsive[];
 	plotOptions: ApexPlotOptions;
 	markers: ApexMarkers;
-  labels: ApexDataLabels;
+	labels: ApexDataLabels;
 };

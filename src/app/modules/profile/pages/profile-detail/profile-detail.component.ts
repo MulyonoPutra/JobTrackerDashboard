@@ -23,171 +23,166 @@ import { UserService } from 'src/app/core/services/user.service';
 import { randomAvatar } from 'src/app/core/utils/random-avatar';
 
 @Component({
-  selector: 'app-profile-detail',
-  standalone: true,
-  imports: [
-    CommonModule,
-    TooltipModule,
-    AngularSvgIconModule,
-    ReadMoreComponent,
-    CardWrapperComponent,
-    ButtonComponent,
-    SidebarModule,
-    FieldsetWrapperComponent,
-    SummaryDisplayComponent,
-    AboutFormsComponent,
-    TitleGradientComponent,
-    ExperienceFormsComponent
-  ],
-  templateUrl: './profile-detail.component.html',
-  styleUrls: ['./profile-detail.component.scss'],
-  providers: [UserService],
+	selector: 'app-profile-detail',
+	standalone: true,
+	imports: [
+		CommonModule,
+		TooltipModule,
+		AngularSvgIconModule,
+		ReadMoreComponent,
+		CardWrapperComponent,
+		ButtonComponent,
+		SidebarModule,
+		FieldsetWrapperComponent,
+		SummaryDisplayComponent,
+		AboutFormsComponent,
+		TitleGradientComponent,
+		ExperienceFormsComponent,
+	],
+	templateUrl: './profile-detail.component.html',
+	styleUrls: ['./profile-detail.component.scss'],
+	providers: [UserService],
 })
 export class ProfileDetailComponent implements OnInit, OnDestroy {
-  private destroyed = new Subject();
-  educationIcon = 'assets/icons/graduation.svg';
-  experienceIcon = 'assets/icons/list.svg';
+	private destroyed = new Subject();
+	educationIcon = 'assets/icons/graduation.svg';
+	experienceIcon = 'assets/icons/list.svg';
 
-  sidebarVisible = false;
-  isEducation = false;
-  isExperience = false;
-  isProfile = false;
-  isUpdate = false;
+	sidebarVisible = false;
+	isEducation = false;
+	isExperience = false;
+	isProfile = false;
+	isUpdate = false;
 
-  user!: User;
-  education!: Education[];
-  experience!: Experience[];
+	user!: User;
+	education!: Education[];
+	experience!: Experience[];
 
-  randomAvatar!: string;
-  experienceId!: string;
+	randomAvatar!: string;
+	experienceId!: string;
 
+	constructor(
+		private readonly userService: UserService,
+		private readonly toastService: ToastService,
+		private readonly router: Router
+	) {
+		this.randomAvatar = randomAvatar();
+	}
 
-  constructor(
-    private readonly userService: UserService,
-    private readonly toastService: ToastService,
-    private readonly router: Router
-  ) {
-    this.randomAvatar = randomAvatar();
-  }
+	ngOnInit(): void {
+		this.findOne();
+	}
 
-  ngOnInit(): void {
-    this.findOne();
-  }
+	findOne(): void {
+		this.userService
+			.findUser()
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: (response) => {
+					this.user = response;
+					this.education = response.education;
+					this.experience = response.experience;
+				},
+				error: (error: HttpErrorResponse) => {
+					this.errorMessage(error);
+				},
+				complete: () => {},
+			});
+	}
 
-  findOne(): void {
-    this.userService
-      .findUser()
-      .pipe(takeUntil(this.destroyed))
-      .subscribe({
-        next: (response) => {
-          this.user = response;
-          this.education = response.education;
-          this.experience = response.experience;
-        },
-        error: (error: HttpErrorResponse) => {
-          this.errorMessage(error);
-        },
-        complete: () => { },
-      });
-  }
+	/**
+	 * Navigate to profile forms page with passing user data
+	 */
+	onNavigate() {
+		this.router.navigateByUrl(`/profile/update/${this.user.id}`, { state: this.user });
+	}
 
-  /**
-   * Navigate to profile forms page with passing user data
-   */
-  onNavigate() {
-    this.router.navigateByUrl(`/profile/update/${this.user.id}`, { state: this.user });
-  }
+	onUpdate(): void {
+		this.sidebarVisible = !this.sidebarVisible;
+		if (this.sidebarVisible) {
+			this.isProfile = !this.isProfile;
+		}
+	}
 
-  onUpdate(): void {
-    this.sidebarVisible = !this.sidebarVisible;
-    if (this.sidebarVisible) {
-      this.isProfile = !this.isProfile;
-    }
-  }
+	onCreate(): void {}
 
-  onCreate(): void {
+	onCreateExperience(): void {
+		this.sidebarVisible = !this.sidebarVisible;
+		this.isExperience = !this.isExperience;
+		this.isUpdate = !this.isUpdate;
+	}
 
-  }
+	onUpdateExperience(id: string): void {
+		this.sidebarVisible = !this.sidebarVisible;
+		this.isExperience = !this.isExperience;
+		this.isUpdate = false;
+		this.experienceId = id;
+		console.log(id);
+	}
 
-  onCreateExperience(): void {
-    this.sidebarVisible = !this.sidebarVisible;
-    this.isExperience = !this.isExperience;
-    this.isUpdate = !this.isUpdate;
-  }
+	onUpdateEducation(): void {
+		this.sidebarVisible = !this.sidebarVisible;
+		this.isEducation = !this.isEducation;
+		this.isUpdate = !this.isUpdate;
+	}
 
-  onUpdateExperience(id: string): void {
-    this.sidebarVisible = !this.sidebarVisible;
-    this.isExperience = !this.isExperience;
-    this.isUpdate = false;
-    this.experienceId = id;
-    console.log(id);
-  }
+	onRemoveExperience(id: string): void {
+		this.userService
+			.removeExperience(id)
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: (response) => {
+					this.successMessage(response);
+				},
+				error: (error: HttpErrorResponse) => {
+					this.errorMessage(error);
+				},
+				complete: () => {
+					this.isUpdate = true;
+					this.onReload();
+				},
+			});
+	}
 
-  onUpdateEducation(): void {
-    this.sidebarVisible = !this.sidebarVisible;
-    this.isEducation = !this.isEducation;
-    this.isUpdate = !this.isUpdate;
-  }
+	onRemoveEducation(id: string): void {
+		this.userService
+			.removeEducation(id)
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: (response) => {
+					this.successMessage(response);
+				},
+				error: (error: HttpErrorResponse) => {
+					this.errorMessage(error);
+				},
+				complete: () => {
+					this.onReload();
+				},
+			});
+	}
 
+	onReload(): void {
+		timer(1000)
+			.pipe(take(1))
+			.subscribe(() => window.location.reload());
+	}
 
-  onRemoveExperience(id: string): void {
-    this.userService.removeExperience(id)
-      .pipe(takeUntil(this.destroyed))
-      .subscribe({
-        next: (response) => {
-          this.successMessage(response)
-        },
-        error: (error: HttpErrorResponse) => {
-          this.errorMessage(error);
-        },
-        complete: () => {
-          this.isUpdate = true;
-          this.onReload();
-        },
-      });
-  }
+	close(): void {
+		this.isProfile = false;
+		this.isExperience = false;
+		this.isEducation = false;
+	}
 
-  onRemoveEducation(id: string): void {
-    this.userService.removeEducation(id)
-      .pipe(takeUntil(this.destroyed))
-      .subscribe({
-        next: (response) => {
-          this.successMessage(response)
-        },
-        error: (error: HttpErrorResponse) => {
-          this.errorMessage(error);
-        },
-        complete: () => {
-          this.onReload();
-        },
-      });
-  }
+	private errorMessage(error: HttpErrorResponse) {
+		this.toastService.showError('Error!', error.message);
+	}
 
-  onReload(): void {
-    timer(1000)
-      .pipe(take(1))
-      .subscribe(() =>
-        window.location.reload()
-      );
-  }
+	private successMessage(message: string) {
+		this.toastService.showSuccess('Success!', message);
+	}
 
-  close(): void {
-    this.isProfile = false;
-    this.isExperience = false;
-    this.isEducation = false;
-  }
-
-  private errorMessage(error: HttpErrorResponse) {
-    this.toastService.showError('Error!', error.message);
-  }
-
-  private successMessage(message: string) {
-    this.toastService.showSuccess('Success!', message);
-  }
-
-  ngOnDestroy(): void {
-    this.destroyed.next(true);
-    this.destroyed.complete();
-  }
-
+	ngOnDestroy(): void {
+		this.destroyed.next(true);
+		this.destroyed.complete();
+	}
 }

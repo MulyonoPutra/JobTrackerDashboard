@@ -6,6 +6,6 @@ export interface CreateActivityDTO {
 	status: string;
 	appliedOn: string;
 	jobPosted: string;
-  platform: string;
+	platform: string;
 	categoryId: string;
 }

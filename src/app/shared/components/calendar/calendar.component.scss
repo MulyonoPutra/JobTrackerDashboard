@@ -1,40 +1,40 @@
 :host {
-  display: block;
+	display: block;
 }
 
 .errors {
-  &-message {
-    @apply blink absolute left-0 font-semibold text-xs text-red-700;
-  }
+	&-message {
+		@apply blink absolute left-0 text-xs font-semibold text-red-700;
+	}
 }
 
 .label-valid {
-  @apply text-xs font-medium text-gray-500 flex justify-center text-center;
+	@apply flex justify-center text-center text-xs font-medium text-gray-500;
 }
 
 .label-invalid {
-  @apply text-xs font-medium text-red-700 flex justify-center text-center;
+	@apply flex justify-center text-center text-xs font-medium text-red-700;
 }
 
 .blink {
-  animation: blinker 1s linear infinite;
+	animation: blinker 1s linear infinite;
 }
 
 @keyframes blinker {
-  50% {
-    opacity: 0;
-  }
+	50% {
+		opacity: 0;
+	}
 }
 
 :host ::ng-deep .p-datepicker {
-  transform: scale(0.7);
+	transform: scale(0.7);
 }
 
 :host ::ng-deep button,
 [type='button'],
 [type='reset'],
 [type='submit'] {
-  background-color: transparent;
-  background-image: none;
-  margin-right: 5px;
+	background-color: transparent;
+	background-image: none;
+	margin-right: 5px;
 }

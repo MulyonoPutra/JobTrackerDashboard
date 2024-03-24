@@ -20,9 +20,10 @@ export class SidebarComponent implements OnInit {
 	public appJson: any = packageJson;
 
 	constructor(
-    public readonly themeService: ThemeService,
-    public readonly menuService: MenuService,
-    public readonly authService: AuthService) {}
+		public readonly themeService: ThemeService,
+		public readonly menuService: MenuService,
+		public readonly authService: AuthService
+	) {}
 
 	ngOnInit(): void {}
 
@@ -34,7 +35,7 @@ export class SidebarComponent implements OnInit {
 		this.themeService.theme = !this.themeService.isDark ? 'dark' : 'light';
 	}
 
-  logout(): void {
-    this.authService.logout();
-  }
+	logout(): void {
+		this.authService.logout();
+	}
 }

@@ -32,9 +32,7 @@ export class AuthService {
 	register(body: Register): Observable<any> {
 		return this.http
 			.post<HttpResponseEntity<Credentials>>(`${this.env}/auth/register`, body)
-			.pipe(
-				catchError((error: HttpErrorResponse) => handlerHttpError(error))
-			);
+			.pipe(catchError((error: HttpErrorResponse) => handlerHttpError(error)));
 	}
 
 	logout() {
