@@ -78,3 +78,16 @@ This project use [Hero Icons](https://heroicons.com/) and [Hero Patterns](https:
 
 The Tailwind name and logos are trademarks of Tailwind Labs Inc.
 The Angular name and logos are trademarks of Google.
+
+# Job Tracker Dashboard
+
+Job Tracker Application is a platform designed to assist users in efficiently monitoring the status and progress of job applications
+
+## Resource
+
+Form Array Resource:
+
+-   https://stackblitz.com/edit/get-data-from-api-and-populate-form-array-with-it-8tihsz?file=src%2Fapp%2Fapp.component.ts,src%2Fapp%2Fapp.component.html
+-   https://stackblitz.com/edit/angular-prepopulate-dynamic-reactive-form-array-wsbcq6?file=src%2Fapp%2Fapp.component.ts
+-   https://stackblitz.com/edit/angular-form-array-add-remove-group-update-value-tgju6a?file=src%2Fapp%2Fapp.component.html,src%2Fapp%2Fapp.component.ts
+-   https://stackblitz.com/edit/form-array-angular?file=src%2Fapp%2Fapp.component.ts
