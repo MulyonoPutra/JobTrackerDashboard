@@ -25,168 +25,166 @@ import { UserService } from 'src/app/core/services/user.service';
 import { randomAvatar } from 'src/app/core/utils/random-avatar';
 
 @Component({
-  selector: 'app-profile-detail',
-  standalone: true,
-  imports: [
-    CommonModule,
-    TooltipModule,
-    AngularSvgIconModule,
-    ReadMoreComponent,
-    CardWrapperComponent,
-    ButtonComponent,
-    SidebarModule,
-    FieldsetWrapperComponent,
-    SummaryDisplayComponent,
-    AboutFormsComponent,
-    TitleGradientComponent,
-  ],
-  templateUrl: './profile-detail.component.html',
-  styleUrls: ['./profile-detail.component.scss'],
-  providers: [UserService, DialogService, DynamicDialogConfig],
+	selector: 'app-profile-detail',
+	standalone: true,
+	imports: [
+		CommonModule,
+		TooltipModule,
+		AngularSvgIconModule,
+		ReadMoreComponent,
+		CardWrapperComponent,
+		ButtonComponent,
+		SidebarModule,
+		FieldsetWrapperComponent,
+		SummaryDisplayComponent,
+		AboutFormsComponent,
+		TitleGradientComponent,
+	],
+	templateUrl: './profile-detail.component.html',
+	styleUrls: ['./profile-detail.component.scss'],
+	providers: [UserService, DialogService, DynamicDialogConfig],
 })
 export class ProfileDetailComponent implements OnInit, OnDestroy {
-  private destroyed = new Subject();
-  educationIcon = 'assets/icons/graduation.svg';
-  experienceIcon = 'assets/icons/list.svg';
+	private destroyed = new Subject();
+	educationIcon = 'assets/icons/graduation.svg';
+	experienceIcon = 'assets/icons/list.svg';
 
-  isEmpty = false;
-  isVisible = false;
+	isEmpty = false;
+	isVisible = false;
 
-  user!: User;
-  education!: Education[];
-  experience!: Experience[];
+	user!: User;
+	education!: Education[];
+	experience!: Experience[];
 
-  randomAvatar!: string;
-  experienceId!: string;
-  ref: DynamicDialogRef | undefined;
+	randomAvatar!: string;
+	experienceId!: string;
+	ref: DynamicDialogRef | undefined;
 
-  constructor(
-    public dialogService: DialogService,
-    private readonly userService: UserService,
-    private readonly toastService: ToastService,
-    private readonly router: Router,
-    public config: DynamicDialogConfig
-  ) {
-    this.randomAvatar = randomAvatar();
-  }
+	constructor(
+		public dialogService: DialogService,
+		private readonly userService: UserService,
+		private readonly toastService: ToastService,
+		private readonly router: Router,
+		public config: DynamicDialogConfig
+	) {
+		this.randomAvatar = randomAvatar();
+	}
 
-  ngOnInit(): void {
-    this.findUser();
-  }
+	ngOnInit(): void {
+		this.findUser();
+	}
 
-  findUser(): void {
-    this.userService
-      .findUser()
-      .pipe(takeUntil(this.destroyed))
-      .subscribe({
-        next: (response) => {
-          this.user = response;
-          this.education = response.education;
-          this.experience = response.experience;
-        },
-        error: (error: HttpErrorResponse) => {
-          this.errorMessage(error);
-        },
-        complete: () => { },
-      });
-  }
+	findUser(): void {
+		this.userService
+			.findUser()
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: (response) => {
+					this.user = response;
+					this.education = response.education;
+					this.experience = response.experience;
+				},
+				error: (error: HttpErrorResponse) => {
+					this.errorMessage(error);
+				},
+				complete: () => {},
+			});
+	}
 
-  onUpdateEducation(): void { }
+	onUpdateEducation(): void {}
 
-  onRemoveExperienceFromServer(id: string): void {
-    this.userService
-      .removeExperience(id)
-      .pipe(takeUntil(this.destroyed))
-      .subscribe({
-        next: (response) => {
-          this.successMessage(response);
-        },
-        error: (error: HttpErrorResponse) => {
-          this.errorMessage(error);
-        },
-        complete: () => {
-          this.onReload();
-        },
-      });
-  }
+	onRemoveExperienceFromServer(id: string): void {
+		this.userService
+			.removeExperience(id)
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: (response) => {
+					this.successMessage(response);
+				},
+				error: (error: HttpErrorResponse) => {
+					this.errorMessage(error);
+				},
+				complete: () => {
+					this.onReload();
+				},
+			});
+	}
 
-  onRemoveEducationFromServer(id: string): void {
-    this.userService
-      .removeEducation(id)
-      .pipe(takeUntil(this.destroyed))
-      .subscribe({
-        next: (response) => {
-          this.successMessage(response);
-        },
-        error: (error: HttpErrorResponse) => {
-          this.errorMessage(error);
-        },
-        complete: () => {
-          this.onReload();
-        },
-      });
-  }
+	onRemoveEducationFromServer(id: string): void {
+		this.userService
+			.removeEducation(id)
+			.pipe(takeUntil(this.destroyed))
+			.subscribe({
+				next: (response) => {
+					this.successMessage(response);
+				},
+				error: (error: HttpErrorResponse) => {
+					this.errorMessage(error);
+				},
+				complete: () => {
+					this.onReload();
+				},
+			});
+	}
 
-  onClose(): void {
-  }
+	onClose(): void {}
 
-  private errorMessage(error: HttpErrorResponse) {
-    this.toastService.showError('Error!', error.message);
-  }
+	private errorMessage(error: HttpErrorResponse) {
+		this.toastService.showError('Error!', error.message);
+	}
 
-  private successMessage(message: string) {
-    this.toastService.showSuccess('Success!', message);
-  }
+	private successMessage(message: string) {
+		this.toastService.showSuccess('Success!', message);
+	}
 
-  private onReload(): void {
-    timer(1000)
-      .pipe(take(1))
-      .subscribe(() => window.location.reload());
-  }
+	private onReload(): void {
+		timer(1000)
+			.pipe(take(1))
+			.subscribe(() => window.location.reload());
+	}
 
-  onUpdate(id: string): void {
-    this.isEmpty = false;
-    const params: DialogState = {
-      id: id,
-      isEmpty: this.isEmpty,
-      items: undefined,
-      title: 'Update Experience Form'
-    }
-    this.openDynamicDialog(params);
-  }
+	onUpdate(id: string): void {
+		this.isEmpty = false;
+		const params: DialogState = {
+			id: id,
+			isEmpty: this.isEmpty,
+			items: undefined,
+			title: 'Update Experience Form',
+		};
+		this.openDynamicDialog(params);
+	}
 
-  onCreate(): void {
-    this.isEmpty = true;
-    const params: DialogState = {
-      id: null,
-      isEmpty: this.isEmpty,
-      items: undefined,
-      title: 'Create Experience Form'
-    }
-    this.openDynamicDialog(params);
-  }
+	onCreate(): void {
+		this.isEmpty = true;
+		const params: DialogState = {
+			id: null,
+			isEmpty: this.isEmpty,
+			items: undefined,
+			title: 'Create Experience Form',
+		};
+		this.openDynamicDialog(params);
+	}
 
-  openDynamicDialog(params: DialogState): void {
-    this.ref = this.dialogService.open(ProfileFormsComponent, {
-      data: {
-        id: params.id,
-        isEmpty: params.isEmpty,
-      },
-      header: params.title,
-      width: '40%'
-    });
+	openDynamicDialog(params: DialogState): void {
+		this.ref = this.dialogService.open(ProfileFormsComponent, {
+			data: {
+				id: params.id,
+				isEmpty: params.isEmpty,
+			},
+			header: params.title,
+			width: '40%',
+		});
 
-    this.ref.onClose.subscribe((e) => {
-      this.isEmpty = false;
-    });
-  }
+		this.ref.onClose.subscribe((e) => {
+			this.isEmpty = false;
+		});
+	}
 
-  ngOnDestroy(): void {
-    if (this.ref) {
-      this.ref.close();
-    }
-    this.destroyed.next(true);
-    this.destroyed.complete();
-  }
+	ngOnDestroy(): void {
+		if (this.ref) {
+			this.ref.close();
+		}
+		this.destroyed.next(true);
+		this.destroyed.complete();
+	}
 }
-
