@@ -1,12 +1,27 @@
 <div class="container pb-4">
-  <p-panel header="{{ title }}" [toggleable]="toggle">
+  <p-panel header="{{ title }}" #toggleablePanel [toggleable]="toggle">
     <ng-template pTemplate="icons">
-      <button pButton class="p-panel-header-icon mt-2"
-        (click)="menu.toggle($event)">
-        <span class="pi pi-code"></span>
-      </button>
-      <p-menu #menu [model]="items" [popup]="true" class="cursor-pointer">
-      </p-menu>
+      @for (item of items[0].items; track $index) {
+        @if (item.label) {
+          <button (click)="executeCommand(item.label)" [pTooltip]="getTooltipContent(item.label!)"
+            tooltipPosition="bottom" pButton class="p-panel-header-icon mt-2">
+            <span class="pi" [ngClass]="item.icon"></span>
+          </button>
+        }
+      }
+    </ng-template>
+    <ng-template #tooltipContent let-type>
+      <div class="flex items-center">
+        @if (type === 'Create') {
+          <span class="text-xs font-semibold"> Create </span>
+        }
+        @if (type === 'Update') {
+          <span class="text-xs font-semibold"> Update </span>
+        }
+        @if (type === 'Delete') {
+          <span class="text-xs font-semibold"> Delete </span>
+        }
+      </div>
     </ng-template>
     <ng-content></ng-content>
   </p-panel>

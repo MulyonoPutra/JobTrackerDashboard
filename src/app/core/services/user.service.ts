@@ -115,4 +115,11 @@ export class UserService {
 				catchError((error: HttpErrorResponse) => handlerHttpError(error))
 			);
 	}
+
+  findExperience(id: string): Observable<Experience> {
+    return this.http.get<HttpResponseEntity<Experience>>(`${this.env}/profile/experience/${id}`).pipe(
+      map((response) => response.data),
+      catchError((error: HttpErrorResponse) => handlerHttpError(error))
+    );
+  }
 }
